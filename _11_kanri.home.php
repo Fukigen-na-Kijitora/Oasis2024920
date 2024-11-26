@@ -20,11 +20,6 @@ $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;
 dbname=LAA1602729-oasis;charset=utf8',
 'LAA1602729',
 'oasis5');
-
-$uploadFileDir = './uploaded_files/';
-if (!is_dir($uploadFileDir)) {
-    mkdir($uploadFileDir, 0777, true);
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -59,6 +54,10 @@ if (!is_dir($uploadFileDir)) {
 </body>
 </html>
 <?php
+$uploadFileDir = './uploaded_files/';
+if (!is_dir($uploadFileDir)) {
+    mkdir($uploadFileDir, 0755, true);
+}
 // アップロードされた画像を保存するディレクトリ
 $uploadDir = './uploads/';
 
