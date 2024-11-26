@@ -7,14 +7,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// データベース接続
-try {
-    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("データベース接続に失敗しました: " . $e->getMessage());
-}
-
 // アップロード用ディレクトリ
 $uploadDir = './uploads/';
 if (!is_dir($uploadDir)) {
@@ -37,10 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 
         if (move_uploaded_file($fileTmpPath, $destination)) {
             $uploadMessage = "画像がアップロードされました！";
-
-            // データベースにファイルパスを保存
-            $stmt = $pdo->prepare("INSERT INTO uploaded_files (file_name, file_path, uploaded_at) VALUES (?, ?, NOW())");
-            $stmt->execute([$fileName, $destination]);
         } else {
             $uploadMessage = "画像のアップロードに失敗しました。";
         }
@@ -205,10 +193,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         <h2>アップロードされた画像一覧</h2>
         <div class="icons">
             <?php
-            // アップロードされた画像を取得して表示
-            $stmt = $pdo->query("SELECT file_path FROM uploaded_files ORDER BY uploaded_at DESC");
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<img src="' . htmlspecialchars($row['file_path']) . '" class="icon" alt="uploaded image">';
+            // アップロードされた画像をディレクトリから取得して表示
+            $files = glob($uploadDir . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+            foreach ($files as $file) {
+                echo '<img src="' . htmlspecialchars($file) . '" class="icon" alt="uploaded image">';
             }
             ?>
         </div>
