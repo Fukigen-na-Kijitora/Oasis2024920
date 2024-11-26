@@ -7,14 +7,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// データベース接続
-try {
-    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("データベース接続に失敗しました: " . $e->getMessage());
-}
-
 // アップロード用ディレクトリ
 $uploadDir = './uploads/';
 if (!is_dir($uploadDir)) {
