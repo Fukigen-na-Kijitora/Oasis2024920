@@ -56,7 +56,8 @@ if (!is_dir($uploadFileDir)) {
                }
 </style>
 </head>
-<body>
+</body>
+</html>
 <?php
 // アップロードされた画像を保存するディレクトリ
 $uploadDir = './uploads/';
