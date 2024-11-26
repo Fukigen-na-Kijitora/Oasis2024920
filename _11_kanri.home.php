@@ -35,6 +35,29 @@ if (!is_dir($uploadFileDir)) {
     <title>ホーム</title>
 </head>
 <body>
+<style>
+        .icon {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin: 10px;
+              }
+        .container {
+                text-align: left;
+                   }
+        .upload-form {
+                margin-top: 20px;
+                     }
+        .icons {
+                display: flex;
+                justify-content: flex-start; /* より適切なプロパティ値 */
+                flex-wrap: wrap;
+               }
+</style>
+</head>
+</body>
+</html>
 <?php
 // アップロードされた画像を保存するディレクトリ
 $uploadDir = './uploads/';
@@ -66,91 +89,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         $uploadError = "許可されていないファイル形式です。";
     }
 }
-
-// アップロードディレクトリ内の画像を取得
-$uploadedImages = array_diff(scandir($uploadDir), ['.', '..']);
-?>
-<style>
-        .icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 10px;
-        }
-        .container {
-            text-align: reft;
-        }
-        .upload-form {
-            margin-top: 20px;
-        }
-        .icons {
-            display: flex;
-            justify-content: reft;
-            flex-wrap: wrap;
-        }
-    </style>
-</head>
-<body>
-        <!-- アップロードフォーム -->
-        <div class="upload-form">
-            <form action="" method="post" enctype="multipart/form-data">
-                <label for="file">画像を選択:</label>
-                <input type="file" name="file" id="file" accept="image/*">
-                <input type="submit" value="アップロード">
-            </form>
-        </div>
-
-        <!-- アップロード成功または失敗のメッセージ -->
-        <?php if (isset($uploadSuccess)): ?>
-            <p style="color: green;"><?php echo $uploadSuccess; ?></p>
-        <?php elseif (isset($uploadError)): ?>
-            <p style="color: red;"><?php echo $uploadError; ?></p>
-        <?php endif; ?>
-
-        <!-- デフォルトアイコンとアップロード画像の表示 -->
-        <div class="icons">
-            <!-- デフォルトアイコン -->
-            <img src="./images/default.png" alt="デフォルトアイコン" class="icon">
-
-            <!-- アップロードされた画像をアイコンとして表示 -->
-            <?php foreach ($uploadedImages as $image): ?>
-                <img src="<?php echo $uploadDir . $image; ?>" alt="アップロードされた画像" class="icon">
-            <?php endforeach; ?>
-        </div>
-    </div>
-</body>
-</html>
-
-    <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                $fileTmpPath = $_FILES['file']['tmp_name'];
-                $fileName = uniqid() . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-                $allowedExts = ['jpg', 'jpeg', 'png', 'gif'];
-
-                $mimeType = mime_content_type($fileTmpPath);
-                if (!in_array(pathinfo($fileName, PATHINFO_EXTENSION), $allowedExts) || !in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif'])) {
-                    echo 'この形式のファイルはアップロードできません。';
-                    exit;
-                    }
-
-                if ($_FILES['file']['size'] > 2 * 1024 * 1024) { // 2MB制限
-                    echo 'ファイルサイズが大きすぎます。';
-                    exit;
-                    }
-
-                if (move_uploaded_file($fileTmpPath, $uploadFileDir . $fileName)) {
-                    echo 'ファイルが正常にアップロードされました。';
-                } else {
-                        echo 'ファイルのアップロードに失敗しました。';
-                }
-                } else {
-                    echo 'ファイルのアップロード中にエラーが発生しました。';
-                }
-            }
-            ?>
-        </div>
-    </div>
-</body>
-</html>
