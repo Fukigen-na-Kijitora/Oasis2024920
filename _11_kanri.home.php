@@ -37,24 +37,24 @@ if (!is_dir($uploadFileDir)) {
 <body>
 <style>
         .icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 10px;
-        }
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin: 10px;
+              }
         .container {
-            text-align: reft;
-        }
+                text-align: left;
+                   }
         .upload-form {
-            margin-top: 20px;
-        }
+                margin-top: 20px;
+                     }
         .icons {
-            display: flex;
-            justify-content: reft;
-            flex-wrap: wrap;
-        }
-    </style>
+                display: flex;
+                justify-content: flex-start; /* より適切なプロパティ値 */
+                flex-wrap: wrap;
+               }
+</style>
 </head>
 <body>
 <?php
