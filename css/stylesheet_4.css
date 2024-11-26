@@ -70,3 +70,22 @@
 #btn_review:hover {
     background-color: #1a4d24;
 }
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+    color: gold;
+}
+
+.star-rating label:hover,
+.star-rating input[type="radio"]:hover ~ label {
+    color: gold;
+}
