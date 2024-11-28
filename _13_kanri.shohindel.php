@@ -1,9 +1,9 @@
 <?php
 // データベース接続設定
-$host = 'localhost'; // データベースホスト名
-$dbname = 'your_database_name'; // データベース名
-$user = 'your_username'; // ユーザー名
-$password = 'your_password'; // パスワード
+$host = 'mysql306.phy.lolipop.lan'; // データベースホスト名
+$dbname = 'LAA1602729-oasis'; // データベース名
+$user = 'LAA1602729'; // ユーザー名
+$password = 'oasis5'; // パスワード
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
