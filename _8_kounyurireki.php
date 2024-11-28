@@ -83,6 +83,13 @@ try {
                     <td><?= htmlspecialchars($purchase['yama_name'], ENT_QUOTES, 'UTF-8') ?></td>
                     <td><img src="<?= htmlspecialchars($purchase['yama_img'], ENT_QUOTES, 'UTF-8') ?>" alt="山の画像" width="100"></td>
                     <td><?= htmlspecialchars($purchase['price'], ENT_QUOTES, 'UTF-8') ?>円</td>
+                    <td>
+                    <!-- レビューを書くボタン -->
+                        <form action="_6_addreview.php" method="POST">
+                            <input type="hidden" name="yama_id" value="<?= htmlspecialchars($purchase['yama_id'], ENT_QUOTES, 'UTF-8') ?>">
+                            <button type="submit">レビューを書く</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>
@@ -127,6 +134,13 @@ try {
                     <td><?= htmlspecialchars($rental['yama_name'], ENT_QUOTES, 'UTF-8') ?></td>
                     <td><img src="<?= htmlspecialchars($rental['yama_img'], ENT_QUOTES, 'UTF-8') ?>" alt="山の画像" width="100"></td>
                     <td><?= number_format($rentalPrice) ?>円</td> <!-- 計算されたレンタル料金を表示 -->
+                    <td>
+                    <!-- レビューを書くボタン -->
+                        <form action="_6_addreview.php" method="POST">
+                            <input type="hidden" name="yama_id" value="<?= htmlspecialchars($purchase['yama_id'], ENT_QUOTES, 'UTF-8') ?>">
+                            <button type="submit">レビューを書く</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>

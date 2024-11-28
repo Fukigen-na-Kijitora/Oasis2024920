@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // 商品IDを取得
-$yama_id = $_GET['yama_id'] ?? null;
+$yama_id = $_POST['yama_id'] ?? null;
 ?>
 
 <!DOCTYPE html>
