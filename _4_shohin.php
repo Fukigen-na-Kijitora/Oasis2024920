@@ -63,6 +63,12 @@
         echo '<input type="hidden" name="price" value="' . $result['price'] . '">';
         echo '<input type="submit" id="btn_rental" value="レンタルする">';
         echo '</form>';
+
+        // レビュー閲覧フォーム
+        echo '<form action="_7_review.php" method="POST">';
+        echo '<input type="hidden" name="yama_id" value="' . $result['yama_id'] . '">'; // yama_idを送信
+        echo '<input type="submit" id="btn_review" value="レビュー閲覧">';
+        echo '</form>';
         
         echo '</div>';
     }

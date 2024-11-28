@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['review_img']) && $_FILES['review_img']['error'] === 0) {
         $file_tmp = $_FILES['review_img']['tmp_name'];
         $file_name = basename($_FILES['review_img']['name']);
-        $upload_dir = './uploads/review_imgs/';
+        $upload_dir = '../images/review_imgs/';
         $review_img = $upload_dir . $file_name;
         move_uploaded_file($file_tmp, $review_img);
     }

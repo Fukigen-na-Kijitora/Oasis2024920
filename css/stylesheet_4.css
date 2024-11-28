@@ -89,3 +89,68 @@
 .star-rating input[type="radio"]:hover ~ label {
     color: gold;
 }
+
+/* 山の画像 */
+.yama-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* レビューページ全体 */
+.review-list {
+    margin: 20px;
+    padding: 0;
+}
+
+/* 各レビューアイテム */
+.review-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+/* 星評価 */
+.stars {
+    color: #f39c12;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* 投稿日時 */
+.review-date {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* レビュー詳細 */
+.review-item p {
+    line-height: 1.5;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* レビュー画像 */
+.review-item img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .review-item {
+        padding: 10px;
+    }
+
+    .stars {
+        font-size: 1em;
+    }
+}
