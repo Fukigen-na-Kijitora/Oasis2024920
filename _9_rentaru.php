@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rental_finish = htmlspecialchars($_POST['rental_finish'], ENT_QUOTES, 'UTF-8');
 
         // レンタル情報をデータベースに登録
-        $sql = "INSERT INTO Oasis_rental (u_id, yama_id, purchaser_country, purchaser_u_name, u_address, u_tell, payment, rental_start, rental_finish, order_date, pay_confirmation_flag) 
+        $sql = "INSERT INTO Oasis_rental (u_id, yama_id, purchaser_country, purchaser_u_name, u_address, u_tell, payment, rental_start, rental_finish, order_date, pay_contirmation_flag) 
                 VALUES (:u_id, :yama_id, :purchaser_country, :purchaser_u_name, :u_address, :u_tell, :payment, :rental_start, :rental_finish, CURDATE(), 0)";
         
         $stmt = $pdo->prepare($sql);
