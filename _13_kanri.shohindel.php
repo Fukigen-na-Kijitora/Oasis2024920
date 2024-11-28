@@ -13,10 +13,21 @@ try {
     exit;
 }
 
-// ユーザー情報取得
-$query = "SELECT id, name, email, registration_date FROM users";
+// 削除処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
+    if (!empty($_POST['delete_ids'])) {
+        $delete_ids = implode(',', array_map('intval', $_POST['delete_ids']));
+        $query = "DELETE FROM products WHERE id IN ($delete_ids)";
+        $pdo->exec($query);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+
+// 商品情報取得
+$query = "SELECT id, product_name, country, price FROM products";
 $stmt = $pdo->query($query);
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -24,9 +35,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ユーザー管理</title>
+    <title>商品一覧</title>
     <style>
-        /* 全体のスタイル */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -121,34 +131,46 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- メインコンテンツ -->
     <div class="main-content">
-        <h1>ユーザー情報</h1>
-        <div class="search-box">
-            <input type="text" placeholder="ユーザー名・idなど">
-            <button>検索</button>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox"></th>
-                    <th>ID</th>
-                    <th>ユーザー名</th>
-                    <th>メールアドレス</th>
-                    <th>登録日</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user): ?>
+        <h1>商品一覧</h1>
+        <form method="POST" action="">
+            <div class="search-box">
+                <input type="text" placeholder="商品名・国名など">
+                <button type="button">検索</button>
+            </div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td><input type="checkbox" value="<?= htmlspecialchars($user['id']) ?>"></td>
-                        <td><?= htmlspecialchars($user['id']) ?></td>
-                        <td><?= htmlspecialchars($user['name']) ?></td>
-                        <td><?= htmlspecialchars($user['email']) ?></td>
-                        <td><?= htmlspecialchars($user['registration_date']) ?></td>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>ID</th>
+                        <th>商品名</th>
+                        <th>国名</th>
+                        <th>価格</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <button class="delete-button">削除</button>
+                </thead>
+                <tbody>
+                    <?php foreach ($products as $product): ?>
+                        <tr>
+                            <td><input type="checkbox" name="delete_ids[]" value="<?= htmlspecialchars($product['id']) ?>"></td>
+                            <td><?= htmlspecialchars($product['id']) ?></td>
+                            <td><?= htmlspecialchars($product['product_name']) ?></td>
+                            <td><?= htmlspecialchars($product['country']) ?></td>
+                            <td><?= htmlspecialchars($product['price']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <button type="submit" name="delete" class="delete-button">削除</button>
+        </form>
     </div>
+
+    <script>
+        // 全選択/全解除
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="delete_ids[]"]');
+            for (const checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        });
+    </script>
 </body>
 </html>
