@@ -15,7 +15,15 @@ $yama_id = $_POST['yama_id'];
 $sql_yama = "SELECT yama_img FROM Oasis_yama WHERE yama_id = :yama_id";
 $stmt_yama = $pdo->prepare($sql_yama);
 $stmt_yama->bindParam(':yama_id', $yama_id, PDO::PARAM_INT);
-$stmt_yama->execute();
+
+try{
+    $stmt_yama->execute();
+}catch(PDOException $e) {
+    error_log($e->getMessage());
+    echo "データベースエラーが発生しました。";
+    exit;
+}
+
 $yama = $stmt_yama->fetch(PDO::FETCH_ASSOC);
 
 if (!$yama) {
@@ -28,7 +36,15 @@ $sql_reviews = "SELECT evaluation, review_date, review_detail, review_img
                 FROM Oasis_review WHERE yama_id = :yama_id ORDER BY review_date DESC";
 $stmt_reviews = $pdo->prepare($sql_reviews);
 $stmt_reviews->bindParam(':yama_id', $yama_id, PDO::PARAM_INT);
-$stmt_reviews->execute();
+
+try{
+    $stmt_reviews->execute();
+}catch(PDOException $e) {
+    error_log($e->getMessage());
+    echo "レビューの取得中にエラーが発生しました。";
+    exit;
+}
+
 $reviews = $stmt_reviews->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -67,7 +83,7 @@ $reviews = $stmt_reviews->fetchAll(PDO::FETCH_ASSOC);
                     <!-- レビュー詳細 -->
                     <p><?php echo nl2br(htmlspecialchars($review['review_detail'])); ?></p>
                     <!-- レビュー画像 -->
-                    <?php if (!empty($review['review_img'])): ?>
+                    <?php if (!empty($review['review_img']) && file_exists($review['review_img'])): ?>
                         <img src="<?php echo htmlspecialchars($review['review_img']); ?>" alt="レビュー画像">
                     <?php endif; ?>
                 </div>
