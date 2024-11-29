@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         .icon {
             width: 100px;
             height: 100px;
-            border-radius: 5px;
+            border-radius: 30px;
             object-fit: cover;
             border: 1px solid #ccc;
         }
