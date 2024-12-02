@@ -7,8 +7,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// アップロード用ディレクトリ
-$uploadDir = './uploads/';
+/*アップロード用ディレクトリ
+$ploadDir = './uploads/';
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     } else {
         $uploadMessage = "許可されていないファイル形式です。";
     }
-}
+}*/
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         .icon {
             width: 100px;
             height: 100px;
-            border-radius: 5px;
+            border-radius: 30px;
             object-fit: cover;
             border: 1px solid #ccc;
         }
