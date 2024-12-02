@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-/*アップロード用ディレクトリ
+//アップロード用ディレクトリ
 $ploadDir = './uploads/';
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
