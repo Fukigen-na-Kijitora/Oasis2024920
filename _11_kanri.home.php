@@ -38,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 }
 ?>
 
-
-  
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -181,7 +179,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         </div>
     </div>
 
-    <?php include 'header.php'; ?>
+    <!-- ヘッダー部分の読み込み（パスを修正） -->
+    <?php
+    // header.phpが同じディレクトリに存在する場合
+    // もし異なる場所にある場合、適切な相対パスまたは絶対パスを指定してください
+    include './header.php'; // 修正されたパス
+    ?>
+
+    <!-- コンテンツ部分 -->
     <div class="content">
         <h1>ダッシュボード</h1>
         <div class="dashboard-buttons">
@@ -204,4 +209,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     </div>
 </body>
 </html>
-    
