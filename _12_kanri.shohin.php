@@ -1,134 +1,152 @@
 <?php
-class KanriShohin
-{
-    public function renderPage()
-    {
-        $page = $_GET['page'] ?? 'dashboard'; // デフォルトはダッシュボード
-        $this->renderHeader();
-        $this->renderSidebar();
-        $this->renderContent($page);
-        $this->renderFooter();
-    }
+// データベース接続設定
+$host = 'mysql306.phy.lolipop.lan';
+$dbname = 'LAA1602729-oasis';
+$user = 'LAA1602729';
+$password = 'oasis5';
 
-    private function renderHeader()
-    {
-        echo '<!DOCTYPE html>
-        <html lang="ja">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>管理者ダッシュボード</title>
-            <style>
-                body { margin: 0; font-family: Arial, sans-serif; }
-                .sidebar { width: 250px; background-color: #2c3e50; color: white; height: 100vh; position: fixed; padding: 20px; display: flex; flex-direction: column; }
-                .main-content { margin-left: 250px; padding: 20px; }
-                .menu ul { list-style: none; padding: 0; margin: 0; }
-                .menu ul li { margin: 15px 0; }
-                .menu ul li a { color: white; text-decoration: none; padding: 10px; display: block; border-radius: 5px; }
-                .menu ul li a:hover { background-color: #34495e; }
-                .form-group { margin-bottom: 15px; }
-                label { display: block; margin-bottom: 5px; }
-                input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-                .submit-btn { background-color: #f1c40f; color: white; border: none; padding: 10px 20px; cursor: pointer; }
-                .dashboard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-                .card { background-color: #f5f5f5; padding: 20px; text-align: center; cursor: pointer; border: 1px solid #ccc; border-radius: 5px; transition: transform 0.2s; }
-                .card:hover { transform: scale(1.05); }
-            </style>
-        </head>
-        <body>';
-    }
-
-    private function renderSidebar()
-    {
-        echo '<div class="sidebar">
-            <div class="profile">
-                <img src="#" alt="Profile Icon" style="width:80px; height:80px; border-radius:50%; background-color:white;">
-                <h3>山崎 亮佑</h3>
-            </div>
-            <div class="menu">
-                <ul>
-                    <li><a href="?page=dashboard">ダッシュボード</a></li>
-                    <li><a href="?page=add">商品追加</a></li>
-                    <li><a href="?page=delete">商品削除</a></li>
-                    <li><a href="?page=users">ユーザー管理</a></li>
-                </ul>
-            </div>
-            <div class="logout" style="margin-top:auto;">
-                <a href="logout.php" style="color:white; text-decoration:none; padding:10px 20px; background-color:#e74c3c; border-radius:5px;">ログアウト</a>
-            </div>
-        </div>';
-    }
-
-    private function renderContent($page)
-    {
-        echo '<div class="main-content">';
-        switch ($page) {
-            case 'dashboard':
-                $this->renderDashboard();
-                break;
-            case 'add':
-                $this->renderAddProduct();
-                break;
-            case 'delete':
-                $this->renderDeleteProduct();
-                break;
-            case 'users':
-                $this->renderUserManagement();
-                break;
-            default:
-                echo '<h1>404 ページが見つかりません</h1>';
-        }
-        echo '</div>';
-    }
-
-    private function renderDashboard()
-    {
-        echo '<h1>ダッシュボード</h1>
-        <div class="dashboard-grid">
-            <a href="?page=add" class="card">商品追加</a>
-            <a href="?page=delete" class="card">商品削除</a>
-            <a href="?page=users" class="card">ユーザー管理</a>
-        </div>';
-    }
-
-    private function renderAddProduct()
-    {
-        echo '<h1>商品追加</h1>
-        <form method="POST" action="?page=save">
-            <div class="form-group">
-                <label for="name">商品名</label>
-                <input type="text" name="name" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="price">価格</label>
-                <input type="number" name="price" id="price" required>
-            </div>
-            <div class="form-group">
-                <label for="details">詳細</label>
-                <textarea name="details" id="details" rows="4"></textarea>
-            </div>
-            <button type="submit" class="submit-btn">追加する</button>
-        </form>';
-    }
-
-    private function renderDeleteProduct()
-    {
-        echo '<h1>商品削除</h1>
-        <p>ここで商品削除の機能を実装できます。</p>';
-    }
-
-    private function renderUserManagement()
-    {
-        echo '<h1>ユーザー管理</h1>
-        <p>ここでユーザー管理の機能を実装できます。</p>';
-    }
-
-    private function renderFooter()
-    {
-        echo '</body></html>';
-    }
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "データベース接続エラー: " . $e->getMessage();
+    exit;
 }
 
-// クラスを呼び出してページをレンダリング
-$kanriShohin = new KanriShohin();
-$kanriShohin->renderPage();
+// フォーム送信処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $region = $_POST['region'] ?? '';
+    $mountain_name = $_POST['mountain_name'] ?? '';
+    $price = $_POST['price'] ?? '';
+    $details = $_POST['details'] ?? '';
+    $image_path = '';
+
+    // 画像のアップロード処理
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = 'uploads/';
+        $image_path = $upload_dir . basename($_FILES['image']['name']);
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $image_path)) {
+            echo "画像アップロードに失敗しました。";
+            exit;
+        }
+    }
+
+    // データベースに挿入
+    $stmt = $pdo->prepare("INSERT INTO products (region, mountain_name, price, details, image_path) VALUES (:region, :mountain_name, :price, :details, :image_path)");
+    $stmt->bindParam(':region', $region);
+    $stmt->bindParam(':mountain_name', $mountain_name);
+    $stmt->bindParam(':price', $price);
+    $stmt->bindParam(':details', $details);
+    $stmt->bindParam(':image_path', $image_path);
+    $stmt->execute();
+
+    echo "商品が追加されました！";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品追加</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #2c3e50;
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h3 {
+            margin-bottom: 30px;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>山崎 亮佑</h3>
+        <a href="#">ダッシュボード</a>
+        <a href="#">商品追加</a>
+        <a href="#">商品削除</a>
+        <a href="#">ユーザー管理</a>
+        <a href="#">購入商品管理</a>
+        <a href="#">レンタル商品管理</a>
+        <a href="#">ログアウト</a>
+    </div>
+
+    <div class="main-content">
+        <h1>商品追加</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="region">国/地域</label>
+            <select name="region" id="region">
+                <option value="Japan">Japan</option>
+                <option value="USA">USA</option>
+                <option value="France">France</option>
+            </select>
+
+            <label for="mountain_name">山名</label>
+            <input type="text" name="mountain_name" id="mountain_name" placeholder="例：○○山" required>
+
+            <label for="price">金額</label>
+            <input type="number" name="price" id="price" placeholder="例：100000000" required>
+
+            <label for="details">詳細</label>
+            <textarea name="details" id="details" placeholder="例：日本最高峰の山" rows="4" required></textarea>
+
+            <label for="image">画像</label>
+            <input type="file" name="image" id="image" accept="image/*" required>
+
+            <button type="submit">商品を追加する</button>
+        </form>
+    </div>
+</body>
+</html>
