@@ -161,23 +161,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 </head>
 <body>
     <!-- サイドバー -->
-    <div class="sidebar">
-        <div class="profile">
-            <img src="#" alt="Profile Image">
-            <h3>山崎 亮佑</h3>
-        </div>
-        <ul>
-            <li><a href="#">ダッシュボード</a></li>
-            <li><a href="#">商品追加</a></li>
-            <li><a href="#">商品削除</a></li>
-            <li><a href="#">ユーザー管理</a></li>
-            <li><a href="#">購入商品管理</a></li>
-            <li><a href="#">レンタル商品管理</a></li>
-        </ul>
-        <div class="logout">
-            <a href="_10_kanri.logout.php">ログアウト</a>
-        </div>
-    </div>
+  
+    
 
     <!-- ヘッダー部分の読み込み（パスを修正） -->
     <?php
