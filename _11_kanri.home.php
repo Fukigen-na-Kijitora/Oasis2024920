@@ -178,28 +178,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         </div>
     </div>
 
-    <!-- コンテンツ部分 -->
+    <?php include 'header.php'; ?>
     <div class="content">
-        <h1>画像アップロード</h1>
-        <form class="upload-form" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <button type="submit">アップロード</button>
-        </form>
-        <?php if ($uploadMessage): ?>
-            <div class="<?php echo strpos($uploadMessage, '失敗') !== false ? 'error' : 'message'; ?>">
-                <?php echo htmlspecialchars($uploadMessage); ?>
+        <h1>ダッシュボード</h1>
+        <div class="dashboard-buttons">
+            <div class="button" style="background-color: #3498db;">
+                <a href="add_product.php">商品追加</a>
             </div>
-        <?php endif; ?>
-        <h2>アップロードされた画像一覧</h2>
-        <div class="icons">
-            <?php
-            // アップロードされた画像をディレクトリから取得して表示
-            $files = glob($uploadDir . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
-            foreach ($files as $file) {
-                echo '<img src="' . htmlspecialchars($file) . '" class="icon" alt="uploaded image">';
-            }
-            ?>
+            <div class="button" style="background-color: #2ecc71;">
+                <a href="delete_product.php">商品削除</a>
+            </div>
+            <div class="button" style="background-color: #f39c12;">
+                <a href="user_info.php">ユーザー情報</a>
+            </div>
+            <div class="button" style="background-color: #9b59b6;">
+                <a href="purchase_management.php">購入商品管理</a>
+            </div>
+            <div class="button" style="background-color: #e74c3c;">
+                <a href="rental_management.php">レンタル商品管理</a>
+            </div>
         </div>
     </div>
 </body>
 </html>
+    

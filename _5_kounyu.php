@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // ユーザーがログインしていない場合、ログインページにリダイレクト
 if (!isset($_SESSION['user_id'])) {
     header('Location: /_2_login.php');
