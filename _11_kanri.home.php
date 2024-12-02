@@ -4,11 +4,11 @@ session_start();
 // セッション確認：ログイン状態でなければログイン画面へリダイレクト
 if (!isset($_SESSION['user_id'])) {
     header('Location: _10_kanri.login.php');
-    exit();
+    exit(); // ここで終了しているか確認
 }
 
-//アップロード用ディレクトリ
-$ploadDir = './uploads/';
+// アップロード用ディレクトリ
+$uploadDir = './uploads/';
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
@@ -35,8 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     } else {
         $uploadMessage = "許可されていないファイル形式です。";
     }
-}*/
+}
 ?>
+
+
+  
 <!DOCTYPE html>
 <html lang="ja">
 <head>
