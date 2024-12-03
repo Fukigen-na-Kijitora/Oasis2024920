@@ -39,7 +39,7 @@ try {
         INNER JOIN 
             Oasis_yama y ON r.yama_id = y.yama_id
         WHERE 
-            r.user_id = :user_id
+            r.u_id = :user_id
     ";
     $rentalStmt = $pdo->prepare($rentalSql);
     $rentalStmt->bindParam(':user_id', $user_id);
@@ -136,7 +136,7 @@ try {
                     <td><?= number_format($rentalPrice) ?>円</td> <!-- 計算されたレンタル料金を表示 -->
                     <td>
                     <!-- レビューを書くボタン -->
-                        <form action="_6_addreview.php" method="POST">
+                        <form action="./_6_addreview.php" method="POST">
                             <input type="hidden" name="yama_id" value="<?= htmlspecialchars($rental['yama_id'], ENT_QUOTES, 'UTF-8') ?>">
                             <button type="submit">レビューを書く</button>
                         </form>
