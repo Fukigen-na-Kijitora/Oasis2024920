@@ -11,12 +11,13 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // データベース接続（PDO）
-try{
+try {
     $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(PDOException $e){
-    die('データベース接続失敗: '.$e->getMessage());
+} catch (PDOException $e) {
+    die('データベース接続失敗: ' . $e->getMessage());
 }
+
 // 現在の日付を取得（レンタル開始日のデフォルトとして使用）
 $current_date = date('Y-m-d');
 
@@ -38,13 +39,13 @@ if ($yama) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // フォームデータを取得
-        $u_address = htmlspecialchars($_POST['u_address'], ENT_QUOTES, 'UTF-8');
-        $purchaser_country = htmlspecialchars($_POST['purchaser_country'], ENT_QUOTES, 'UTF-8');
-        $purchaser_u_name = htmlspecialchars($_POST['purchaser_u_name'], ENT_QUOTES, 'UTF-8');
-        $u_tell = htmlspecialchars($_POST['u_tell'], ENT_QUOTES, 'UTF-8');
-        $payment = htmlspecialchars($_POST['payment'], ENT_QUOTES, 'UTF-8');
-        $rental_start = htmlspecialchars($_POST['rental_start'], ENT_QUOTES, 'UTF-8');
-        $rental_finish = htmlspecialchars($_POST['rental_finish'], ENT_QUOTES, 'UTF-8');
+        $u_address = isset($_POST['u_address']) ? htmlspecialchars($_POST['u_address'], ENT_QUOTES, 'UTF-8') : '';
+        $purchaser_country = isset($_POST['purchaser_country']) ? htmlspecialchars($_POST['purchaser_country'], ENT_QUOTES, 'UTF-8') : '';
+        $purchaser_u_name = isset($_POST['purchaser_u_name']) ? htmlspecialchars($_POST['purchaser_u_name'], ENT_QUOTES, 'UTF-8') : '';
+        $u_tell = isset($_POST['u_tell']) ? htmlspecialchars($_POST['u_tell'], ENT_QUOTES, 'UTF-8') : '';
+        $payment = isset($_POST['payment']) ? htmlspecialchars($_POST['payment'], ENT_QUOTES, 'UTF-8') : '';
+        $rental_start = isset($_POST['rental_start']) ? htmlspecialchars($_POST['rental_start'], ENT_QUOTES, 'UTF-8') : '';
+        $rental_finish = isset($_POST['rental_finish']) ? htmlspecialchars($_POST['rental_finish'], ENT_QUOTES, 'UTF-8') : '';
 
         // レンタル情報をデータベースに登録
         $sql = "INSERT INTO Oasis_rental (u_id, yama_id, purchaser_country, purchaser_u_name, u_address, u_tell, payment, rental_start, rental_finish, order_date, pay_contirmation_flag) 
