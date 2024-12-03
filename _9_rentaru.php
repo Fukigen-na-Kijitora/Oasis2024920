@@ -3,7 +3,7 @@ session_start();
 
 // ユーザーがログインしていない場合、ログインページにリダイレクト
 if (!isset($_SESSION['user_id'])) {
-    header('Location:/_2_login.php');
+    header('Location: ./_2_login.php');
     exit;
 }
 
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         // データが正常に登録された後、指定したページにリダイレクト
-        header('Location: /_3_home.php');
+        header('Location: ./_3_home.php');
         exit;
         }else{
             echo "すべてのフィールドを入力してください。";
