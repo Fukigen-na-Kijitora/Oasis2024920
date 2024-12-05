@@ -17,7 +17,7 @@ try {
 $order_by = $_GET['order_by'] ?? 'id';
 $search = $_GET['search'] ?? '';
 
-$sql = "SELECT * FROM rentals WHERE user_name LIKE :search OR id LIKE :search ORDER BY $order_by";
+$sql = "SELECT * FROM Oasis_rental WHERE purchaser_u_name LIKE :search OR id LIKE :search ORDER BY $order_by";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
 $stmt->execute();
@@ -148,15 +148,15 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($rentals as $rental): ?>
+                <?php foreach ($Oasis_rental as $rental): ?>
                     <tr>
                         <td><input type="checkbox"></td>
-                        <td><?= htmlspecialchars($rental['id'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($rental['user_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($rental['mountain_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($rental['rental_date'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($rental['return_date'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars(number_format($rental['price_per_day']), ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($rental['rental_id'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($rental['purchaser_u_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($rental['yama_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($rental['rental_start'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($rental['rental_finish'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars(number_format($rental['order_date']), ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
