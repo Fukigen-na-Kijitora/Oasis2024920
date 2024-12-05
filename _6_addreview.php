@@ -89,17 +89,22 @@ $yama_id = $_POST['yama_id'] ?? null;
 
         <label for="evaluation">評価:</label>
         <div class="star-rating">
-            <input type="radio" name="evaluation" value="5" id="star5" required>
-            <label for="star5">★</label>
-            <input type="radio" name="evaluation" value="4" id="star4">
-            <label for="star4">★</label>
-            <input type="radio" name="evaluation" value="3" id="star3">
-            <label for="star3">★</label>
-            <input type="radio" name="evaluation" value="2" id="star2">
-            <label for="star2">★</label>
             <input type="radio" name="evaluation" value="1" id="star1">
             <label for="star1">★</label>
+
+            <input type="radio" name="evaluation" value="2" id="star2">
+            <label for="star2">★</label>
+
+            <input type="radio" name="evaluation" value="3" id="star3">
+            <label for="star3">★</label>
+
+            <input type="radio" name="evaluation" value="4" id="star4">
+            <label for="star4">★</label>
+            
+            <input type="radio" name="evaluation" value="5" id="star5">
+            <label for="star5">★</label>
         </div>
+
 
         <br><br>
 
