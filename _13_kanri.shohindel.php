@@ -150,7 +150,7 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tbody>
                     <?php foreach ($Oasis_yama as $product): ?>
                         <tr>
-                            <td><input type="checkbox" name="delete_ids[]" value="<?= htmlspecialchars($product['id']) ?></td>
+                            <td><input type="checkbox" name="delete_ids[]" value="<?= htmlspecialchars($product['yama_id']) ?>"></td>
                             <td><?= htmlspecialchars($product['yama_id']) ?></td>
                             <td><?= htmlspecialchars($product['yama_name']) ?></td>
                             <td><?= htmlspecialchars($product['country_name']) ?></td>
