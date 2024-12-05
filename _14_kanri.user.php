@@ -14,7 +14,7 @@ try {
 }
 
 // ユーザー情報取得
-$query = "SELECT id, name, email, registration_date FROM users";
+$query = "SELECT u_id, u_name, u_mail,registration_date FROM Oasis_user";
 $stmt = $pdo->query($query);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -139,10 +139,10 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tbody>
                 <?php foreach ($users as $user): ?>
                     <tr>
-                        <td><input type="checkbox" value="<?= htmlspecialchars($user['id']) ?>"></td>
-                        <td><?= htmlspecialchars($user['id']) ?></td>
-                        <td><?= htmlspecialchars($user['name']) ?></td>
-                        <td><?= htmlspecialchars($user['email']) ?></td>
+                        <td><input type="checkbox" value="<?= htmlspecialchars($user['u_id']) ?>"></td>
+                        <td><?= htmlspecialchars($user['u_id']) ?></td>
+                        <td><?= htmlspecialchars($user['u_name']) ?></td>
+                        <td><?= htmlspecialchars($user['u_mail']) ?></td>
                         <td><?= htmlspecialchars($user['registration_date']) ?></td>
                     </tr>
                 <?php endforeach; ?>
