@@ -148,12 +148,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($products as $product): ?>
+                    <?php foreach ($Oasis_yama as $product): ?>
                         <tr>
                             <td><input type="checkbox" name="delete_ids[]" value="<?= htmlspecialchars($product['id']) ?>"></td>
-                            <td><?= htmlspecialchars($product['id']) ?></td>
-                            <td><?= htmlspecialchars($product['product_name']) ?></td>
-                            <td><?= htmlspecialchars($product['country']) ?></td>
+                            <td><?= htmlspecialchars($product['yama_id']) ?></td>
+                            <td><?= htmlspecialchars($product['yama_name']) ?></td>
+                            <td><?= htmlspecialchars($product['country_name']) ?></td>
                             <td><?= htmlspecialchars($product['price']) ?></td>
                         </tr>
                     <?php endforeach; ?>
