@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
 }
 
 // 商品情報取得
-$query = "SELECT id, product_name, country, price FROM products";
+$query = "SELECT id, product_name, country, price FROM Oasis_yama";
 $stmt = $pdo->query($query);
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
