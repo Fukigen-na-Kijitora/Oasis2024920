@@ -10,6 +10,9 @@ if (!isset($_SESSION['user_id'])) {
 // データベース接続（PDO）
 $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
 
+// エラーメッセージを保持する変数
+$error_message = "";
+
 // フォームデータの処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
@@ -19,42 +22,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $review_detail = isset($_POST['review_detail']) ? htmlspecialchars($_POST['review_detail'], ENT_QUOTES, 'UTF-8') : null;
 
     if ($evaluation === null || $review_detail === null) {
-        echo "評価とレビュー詳細は必須項目です。すべてのフィールドを入力してください。";
-        exit;
-    }
+        $error_message = "評価とレビュー詳細は必須項目です。すべてのフィールドを入力してください。";
+    } else {
+        $review_date = date('Y-m-d H:i:s');
+        $review_img = null;
 
-    $review_date = date('Y-m-d H:i:s');
-    $review_img = null;
+        // 画像アップロード処理
+        if (isset($_FILES['review_img']) && $_FILES['review_img']['error'] === UPLOAD_ERR_OK) {
+            $file_tmp = $_FILES['review_img']['tmp_name'];
+            $file_name = basename($_FILES['review_img']['name']);
+            $upload_dir = '../images/review_imgs/';
+            $review_img = $upload_dir . $file_name;
 
-    if (isset($_FILES['review_img']) && $_FILES['review_img']['error'] === UPLOAD_ERR_OK) {
-        $file_tmp = $_FILES['review_img']['tmp_name'];
-        $file_name = basename($_FILES['review_img']['name']);
-        $upload_dir = '../images/review_imgs/';
-        $review_img = $upload_dir . $file_name;
+            if (!move_uploaded_file($file_tmp, $review_img)) {
+                $error_message = "画像のアップロードに失敗しました。";
+            }
+        }
 
-        if (!move_uploaded_file($file_tmp, $review_img)) {
-            echo "画像のアップロードに失敗しました。";
+        // データベースに保存
+        if (empty($error_message)) {
+            $sql = "INSERT INTO Oasis_review (yama_id, user_id, evaluation, review_date, review_detail, review_img) 
+                    VALUES (:yama_id, :user_id, :evaluation, :review_date, :review_detail, :review_img)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':yama_id', $_POST['yama_id']);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':evaluation', $evaluation);
+            $stmt->bindParam(':review_date', $review_date);
+            $stmt->bindParam(':review_detail', $review_detail);
+            $stmt->bindParam(':review_img', $review_img);
+
+            $stmt->execute();
+
+            header('Location: ./_3_home.php');
             exit;
         }
     }
-
-    $sql = "INSERT INTO Oasis_review (yama_id, user_id, evaluation, review_date, review_detail, review_img) 
-            VALUES (:yama_id, :user_id, :evaluation, :review_date, :review_detail, :review_img)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':yama_id', $_POST['yama_id']);
-    $stmt->bindParam(':user_id', $user_id);
-    $stmt->bindParam(':evaluation', $evaluation);
-    $stmt->bindParam(':review_date', $review_date);
-    $stmt->bindParam(':review_detail', $review_detail);
-    $stmt->bindParam(':review_img', $review_img);
-
-    $stmt->execute();
-
-    echo "レビューが投稿されました。";
-    header('Location: ./_3_home.php');
-    exit;
 }
 
+// 商品IDを取得
 $yama_id = $_POST['yama_id'] ?? null;
 ?>
 
@@ -74,12 +79,14 @@ $yama_id = $_POST['yama_id'] ?? null;
 
     <h2>レビューを投稿する</h2>
 
+    <?php if (!empty($error_message)): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
+    <?php endif; ?>
+
     <!-- 評価フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-        <!-- hiddenでyama_idを送信 -->
-        <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($yama_id); ?>"> 
+        <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($yama_id); ?>"> <!-- yama_idをhiddenで送信 -->
 
-        <!-- 評価セクション -->
         <label for="evaluation">評価:</label>
         <div class="star-rating">
             <input type="radio" name="evaluation" value="5" id="star5" required>
@@ -96,13 +103,11 @@ $yama_id = $_POST['yama_id'] ?? null;
 
         <br><br>
 
-        <!-- レビュー詳細セクション -->
         <label for="review_detail">レビュー詳細:</label>
         <textarea name="review_detail" id="review_detail" rows="5" required></textarea>
         
         <br><br>
 
-        <!-- 画像アップロードセクション -->
         <label for="review_img">レビュー画像（任意）:</label>
         <input type="file" name="review_img" id="review_img">
 
