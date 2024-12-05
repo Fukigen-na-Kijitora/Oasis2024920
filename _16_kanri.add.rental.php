@@ -17,7 +17,7 @@ try {
 $order_by = $_GET['order_by'] ?? 'id';
 $search = $_GET['search'] ?? '';
 
-$sql = "SELECT * FROM Oasis_rental WHERE purchaser_u_name LIKE :search OR id LIKE :search ORDER BY $order_by";
+$sql = "SELECT * FROM Oasis_rental WHERE purchaser_u_name LIKE :search OR rental_id LIKE :search ORDER BY $order_by";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
 $stmt->execute();
