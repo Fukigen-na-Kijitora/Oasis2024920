@@ -137,7 +137,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user): ?>
+                <?php foreach ($Oasis_user as $user): ?>
                     <tr>
                         <td><input type="checkbox" value="<?= htmlspecialchars($user['u_id']) ?>"></td>
                         <td><?= htmlspecialchars($user['u_id']) ?></td>
