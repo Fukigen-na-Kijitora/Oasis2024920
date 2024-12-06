@@ -15,12 +15,13 @@ try {
 
 // 検索と並び替え処理
 $order_by = $_GET['order_by'] ?? 'buy_id';
+$order_dir = $_GET['order_dir'] ?? 'asc';
 $search = $_GET['search'] ?? '';
 
 $sql = "SELECT buy_id, purchaser_user_name, yama_id, order_date, price, purchaser_country 
         FROM Oasis_buy 
         WHERE purchaser_user_name LIKE :search OR buy_id LIKE :search
-        ORDER BY $order_by";
+        ORDER BY $order_by $order_dir";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
@@ -122,44 +123,52 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
 </div>
-    <div class="main-content">
-        <h1>購入商品管理</h1>
-        <form method="GET">
-            <input type="text" name="search" placeholder="ユーザー名・idなど" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
-            <button type="submit">検索</button>
-            <label for="order_by">並び替え</label>
-            <select name="order_by" id="order_by" onchange="this.form.submit()">
-                <option value="buy_id" <?= $order_by === 'buy_id' ? 'selected' : '' ?>>標準</option>
-                <option value="purchaser_user_name" <?= $order_by === 'purchaser_user_name' ? 'selected' : '' ?>>ユーザー名</option>
-                <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>山ID</option>
-                <option value="order_date" <?= $order_by === 'order_date' ? 'selected' : '' ?>>購入日</option>
-                <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
-            </select>
-        </form>
-        <table>
-            <thead>
+
+<div class="main-content">
+    <h1>購入商品管理</h1>
+    <form method="GET">
+        <input type="text" name="search" placeholder="ユーザー名・idなど" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
+        <button type="submit">検索</button>
+        
+        <label for="order_by">並び替え</label>
+        <select name="order_by" id="order_by" onchange="this.form.submit()">
+            <option value="buy_id" <?= $order_by === 'buy_id' ? 'selected' : '' ?>>標準</option>
+            <option value="purchaser_user_name" <?= $order_by === 'purchaser_user_name' ? 'selected' : '' ?>>ユーザー名</option>
+            <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>山ID</option>
+            <option value="order_date" <?= $order_by === 'order_date' ? 'selected' : '' ?>>購入日</option>
+            <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
+        </select>
+
+        <!-- 昇順・降順切り替えボタン -->
+        <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+            <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
+        </button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>購入ID</th>
+                <th>ユーザー名</th>
+                <th>山ID</th>
+                <th>購入日</th>
+                <th>価格</th>
+                <th>国</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($results as $row): ?>
                 <tr>
-                    <th>購入ID</th>
-                    <th>ユーザー名</th>
-                    <th>山ID</th>
-                    <th>購入日</th>
-                    <th>価格</th>
-                    <th>国</th>
+                    <td><?= htmlspecialchars($row['buy_id'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['purchaser_user_name'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['yama_id'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['order_date'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars(number_format($row['price']), ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['purchaser_country'], ENT_QUOTES) ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($results as $row): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row['buy_id'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['purchaser_user_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['yama_id'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['order_date'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars(number_format($row['price']), ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['purchaser_country'], ENT_QUOTES) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

@@ -4,7 +4,7 @@ $host = 'mysql306.phy.lolipop.lan';
 $dbname = 'LAA1602729-oasis';
 $user = 'LAA1602729';
 $password = 'oasis5';
-
+ 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -12,24 +12,24 @@ try {
     echo "データベース接続エラー: " . $e->getMessage();
     exit;
 }
-
+ 
 // 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     if (!empty($_POST['delete_ids'])) {
         $delete_ids = implode(',', array_map('intval', $_POST['delete_ids']));
-        $query = "DELETE FROM products WHERE id IN ($delete_ids)";
+        $query = "DELETE FROM Oasis_yama WHERE yama_id IN ($delete_ids)";
         $pdo->exec($query);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
 }
-
+ 
 // 商品情報取得
-$query = "SELECT yama_id, yama_name, country_name, price FROM Oasis_yama";
+$query = "SELECT * FROM Oasis_yama";
 $stmt = $pdo->query($query);
 $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -128,7 +128,7 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
 </div>
-
+ 
     <!-- メインコンテンツ -->
     <div class="main-content">
         <h1>商品一覧</h1>
@@ -162,7 +162,7 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button type="submit" name="delete" class="delete-button">削除</button>
         </form>
     </div>
-
+ 
     <script>
         // 全選択/全解除
         document.getElementById('select-all').addEventListener('change', function() {
@@ -174,4 +174,6 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </script>
 </body>
 </html>
-
+ 
+ 
+ 

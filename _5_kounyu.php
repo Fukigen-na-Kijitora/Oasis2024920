@@ -71,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form action="" method="POST">
     <div class="left-column">
         <!-- 購入者情報 -->
+         <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($_POST['yama_id'] ?? ''); ?>">
+         <input type="hidden" name="price" value="<?php echo htmlspecialchars($_POST['price'] ?? ''); ?>">
         <fieldset>
             <h3>1. 購入者様情報</h3>
             <label for="purchaser_country">国/地域:</label>
@@ -97,15 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h3>2. お支払方法</h3>
             <label>
                 <input type="radio" name="payment" value="VISA" required>
-                <img src="./images/visa.png" alt="VISA" width="50">
+                <img src="./images/visa.png" alt="VISA" width="100">
             </label>
             <label>
                 <input type="radio" name="payment" value="JCB" required>
-                <img src="./images/jcb.png" alt="JCB" width="50">
+                <img src="./images/jcb.png" alt="JCB" width="100">
             </label>
             <label>
                 <input type="radio" name="payment" value="PayPay" required>
-                <img src="./images/Paypay.jpg" alt="PayPay" width="50">
+                <img src="./images/Paypay.jpg" alt="PayPay" width="100">
             </label>
         </fieldset>
     </div>
@@ -116,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="checkbox" name="kiyaku" required> 利用規約に同意する
         </div>
         <!-- 購入ボタン -->
-         <input type="submit">購入する
+         <input type="submit" value="購入する">
     </div>
 
 </form>
