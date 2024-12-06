@@ -7,13 +7,13 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 入力データ取得
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $password_confirm = $_POST['password_confirm'];
+        $name = $_POST['name'] ?? null;
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $password_confirm = $_POST['password_confirm'] ?? null;
 
         // 入力データ検証
-        if (empty($name) || empty($email) || empty($password)) {
+        if (empty($name) || empty($email) || empty($password) || empty($password_confirm)) {
             die('全てのフィールドを入力してください。');
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
