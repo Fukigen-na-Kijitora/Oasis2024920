@@ -14,12 +14,12 @@ try {
 }
 
 // 検索と並び替え処理
-$order_by = $_GET['order_by'] ?? 'r.id';
+$order_by = $_GET['order_by'] ?? 'r.rental_id';
 $search = $_GET['search'] ?? '';
 
 $sql = "
     SELECT 
-        r.id,
+        r.rental_id,
         u.user_name AS user_name,
         y.yama_name AS mountain_name,
         r.rental_start,
