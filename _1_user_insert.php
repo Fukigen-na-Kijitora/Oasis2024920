@@ -13,14 +13,11 @@ try {
         $password_confirm = $_POST['password_confirm'] ?? null;
 
         // 入力データ検証
-        if (empty($name) || empty($email) || empty($password) || empty($password_confirm)) {
+        if (empty($name) || empty($email) || empty($password)) {
             die('全てのフィールドを入力してください。');
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             die('正しいメールアドレスを入力してください。');
-        }
-        if ($password !== $password_confirm) {
-            die('パスワードが一致しません。');
         }
 
         // パスワードのハッシュ化
