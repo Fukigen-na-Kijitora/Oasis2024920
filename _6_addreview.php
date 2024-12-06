@@ -13,6 +13,8 @@ $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;char
 // エラーメッセージを保持する変数
 $error_message = "";
 
+// 商品IDを取得
+$yama_id = $_POST['yama_id'] ?? null;
 
 // フォームデータの処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -45,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "INSERT INTO Oasis_review (yama_id, user_id, evaluation, review_date, review_detail, review_img) 
                     VALUES (:yama_id, :user_id, :evaluation, :review_date, :review_detail, :review_img)";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':yama_id', $yama_id);
+            $stmt->bindParam(':yama_id', $_POST['yama_id']);
             $stmt->bindParam(':user_id', $user_id);
             $stmt->bindParam(':evaluation', $evaluation);
             $stmt->bindParam(':review_date', $review_date);
@@ -60,8 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 商品IDを取得
-$yama_id = $_POST['yama_id'] ?? null;
+
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +83,7 @@ $yama_id = $_POST['yama_id'] ?? null;
 
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($_POST['yama_id'] ?? ''); ?>">
+    <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($yama_id ?? ''); ?>">
         <h2>レビューの記入をしよう！</h2>
 
         <!-- 星評価 -->
