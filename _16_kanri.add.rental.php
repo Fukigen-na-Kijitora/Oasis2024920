@@ -150,9 +150,9 @@ try {
                 <option value="r.id" <?= $order_by === 'rental_id' ? 'selected' : '' ?>>標準</option>
                 <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
                 <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>山名</option>
-                <option value="r.rental_date" <?= $order_by === 'rental_start' ? 'selected' : '' ?>>貸出日</option>
-                <option value="r.return_date" <?= $order_by === 'rental_finish' ? 'selected' : '' ?>>返却日</option>
-                <option value="r.daily_price" <?= $order_by === 'dayprice' ? 'selected' : '' ?>>日割り価格</option>
+                <option value="r.rental_start" <?= $order_by === 'rental_start' ? 'selected' : '' ?>>貸出日</option>
+                <option value="r.rental_finish" <?= $order_by === 'rental_finish' ? 'selected' : '' ?>>返却日</option>
+                <option value="r.dayprice" <?= $order_by === 'dayprice' ? 'selected' : '' ?>>日割り価格</option>
             </select>
         </form>
         <table>
@@ -174,7 +174,7 @@ try {
                         <td><?= htmlspecialchars($row['yama_name'], ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars($row['rental_start'], ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars($row['rental_finish'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars(number_format($row['daily_price']), ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars(number_format($row['dayprice']), ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
