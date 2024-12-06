@@ -12,6 +12,7 @@ try {
     // 検索ワードと並び替え
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'r.rental_id';
+    $order_dir = isset($_GET['order_dir']) ? $_GET['order_dir'] : 'asc'; // 昇順/降順
 
     // 並び替え可能な列を制限
     $valid_columns = ['r.rental_id', 'u_name', 'yama_name', 'rental_start', 'rental_finish', 'dayprice'];
@@ -32,7 +33,7 @@ try {
         JOIN Oasis_user u ON r.u_id = u.u_id
         JOIN Oasis_yama y ON r.yama_id = y.yama_id
         WHERE u_name LIKE :search OR yama_name LIKE :search OR r.rental_id LIKE :search
-        ORDER BY $order_by";
+        ORDER BY $order_by $order_dir"; // 昇順降順の順序も加えます
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
@@ -140,45 +141,50 @@ try {
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
 </div>
-    <div class="main-content">
-        <h1>レンタル商品管理</h1>
-        <form method="GET">
-            <input type="text" name="search" placeholder="ユーザー名・山名・idなど" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
-            <button type="submit">検索</button>
-            <label for="order_by">並び替え</label>
-            <select name="order_by" id="order_by" onchange="this.form.submit()">
-                <option value="r.rental_id" <?= $order_by === 'r.rental_id' ? 'selected' : '' ?>>標準</option>
-                <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
-                <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>山名</option>
-                <option value="r.rental_start" <?= $order_by === 'r.rental_start' ? 'selected' : '' ?>>貸出日</option>
-                <option value="r.rental_finish" <?= $order_by === 'r.rental_finish' ? 'selected' : '' ?>>返却日</option>
-                <option value="y.dayprice" <?= $order_by === 'y.dayprice' ? 'selected' : '' ?>>日割り価格</option>
-            </select>
-        </form>
-        <table>
-            <thead>
+<div class="main-content">
+    <h1>レンタル商品管理</h1>
+    <form method="GET">
+        <input type="text" name="search" placeholder="ユーザー名・山名・idなど" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
+        <button type="submit">検索</button>
+        <label for="order_by">並び替え</label>
+        <select name="order_by" id="order_by" onchange="this.form.submit()">
+            <option value="r.rental_id" <?= $order_by === 'r.rental_id' ? 'selected' : '' ?>>標準</option>
+            <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
+            <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>山名</option>
+            <option value="r.rental_start" <?= $order_by === 'r.rental_start' ? 'selected' : '' ?>>貸出日</option>
+            <option value="r.rental_finish" <?= $order_by === 'r.rental_finish' ? 'selected' : '' ?>>返却日</option>
+            <option value="y.dayprice" <?= $order_by === 'y.dayprice' ? 'selected' : '' ?>>日割り価格</option>
+        </select>
+
+        <!-- 昇順・降順切り替えボタン -->
+        <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+            <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
+        </button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>ユーザー名</th>
+                <th>山名</th>
+                <th>貸出日</th>
+                <th>返却日</th>
+                <th>日割り価格</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($results as $row): ?>
                 <tr>
-                    <th>id</th>
-                    <th>ユーザー名</th>
-                    <th>山名</th>
-                    <th>貸出日</th>
-                    <th>返却日</th>
-                    <th>日割り価格</th>
+                    <td><?= htmlspecialchars($row['rental_id'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['u_name'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['yama_name'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['rental_start'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars($row['rental_finish'], ENT_QUOTES) ?></td>
+                    <td><?= htmlspecialchars(number_format($row['dayprice']), ENT_QUOTES) ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($results as $row): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row['rental_id'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['u_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['yama_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['rental_start'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['rental_finish'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars(number_format($row['dayprice']), ENT_QUOTES) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
