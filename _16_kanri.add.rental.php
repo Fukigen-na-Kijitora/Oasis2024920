@@ -1,5 +1,5 @@
 <?php
-// データベース接続設定
+// DB接続設定
 $host = 'mysql306.phy.lolipop.lan';
 $dbname = 'LAA1602729-oasis';
 $user = 'LAA1602729';
@@ -8,33 +8,42 @@ $password = 'oasis5';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // 検索ワードと並び替え
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'r.rental_id';
+
+    // 並び替え可能な列を制限
+    $valid_columns = ['r.rental_id', 'u.u_name', 'y.yama_name', 'r.rental_date', 'r.return_date', 'r.daily_price'];
+    if (!in_array($order_by, $valid_columns)) {
+        $order_by = 'r.rental_id';
+    }
+
+    // SQLクエリ
+    $sql = "
+        SELECT 
+            r.rental_id, -- Oasis_rental の主キー列
+            u.user_name AS user_name,
+            y.yama_name AS mountain_name,
+            r.rental_date,
+            r.return_date,
+            r.daily_price
+        FROM Oasis_rental r
+        JOIN Oasis_user u ON r.u_id = u.u_id
+        JOIN Oasis_yama y ON r.yama_id = y.yama_id
+        WHERE u.user_name LIKE :search OR y.mountain_name LIKE :search OR r.rental_id LIKE :search
+        ORDER BY $order_by";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+    $stmt->execute();
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
-    echo "データベース接続エラー: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
     exit;
 }
-
-// 検索と並び替え処理
-$order_by = $_GET['order_by'] ?? 'r.rental_id';
-$search = $_GET['search'] ?? '';
-
-$sql = "
-    SELECT 
-        r.rental_id,
-        u.user_name AS user_name,
-        y.yama_name AS mountain_name,
-        r.rental_start,
-        r.return_finish,
-        y.dayprice
-    FROM Oasis_rental r
-    JOIN Oasis_user u ON r.u_id = u.u_id
-    JOIN Oasis_yama y ON r.yama_id = y.yama_id
-    WHERE u.user_name LIKE :search OR y.mountain_name LIKE :search OR r.id LIKE :search
-    ORDER BY $order_by";
-
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-$stmt->execute();
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
