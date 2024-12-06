@@ -26,7 +26,7 @@ try {
             u.u_name AS user_name,
             y.yama_name AS mountain_name,
             r.rental_start,
-            r.return_finish,
+            r.rental_finish,
             y.dayprice
         FROM Oasis_rental r
         JOIN Oasis_user u ON r.u_id = u.u_id
