@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "INSERT INTO Oasis_review (yama_id, user_id, evaluation, review_date, review_detail, review_img) 
                     VALUES (:yama_id, :user_id, :evaluation, :review_date, :review_detail, :review_img)";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':yama_id', $_POST['yama_id']);
+            $stmt->bindParam(':yama_id', $yama_id);
             $stmt->bindParam(':user_id', $user_id);
             $stmt->bindParam(':evaluation', $evaluation);
             $stmt->bindParam(':review_date', $review_date);
@@ -82,7 +82,7 @@ $yama_id = $_POST['yama_id'] ?? null;
 
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="yama_id" value=>
+        <input type="hidden" name="yama_id" value=<?= $yama_id ?>>
         <h2>レビューの記入</h2>
 
         <!-- 星評価 -->
