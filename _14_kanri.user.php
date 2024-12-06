@@ -13,8 +13,22 @@ try {
     exit;
 }
 
+// 削除処理
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
+    $delete_ids = $_POST['delete_users'];
+    if (!empty($delete_ids)) {
+        // 配列を安全に処理して削除
+        $placeholders = rtrim(str_repeat('?,', count($delete_ids)), ',');
+        $query = "DELETE FROM Oasis_user WHERE u_id IN ($placeholders)";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($delete_ids);
+    }
+    header("Location: " . $_SERVER['PHP_SELF']); // リロード
+    exit;
+}
+
 // ユーザー情報取得
-$query = "SELECT u_id, u_name, u_mail,registration_date FROM Oasis_user";
+$query = "SELECT u_id, u_name, u_mail, registration_date FROM Oasis_user";
 $stmt = $pdo->query($query);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -109,15 +123,15 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <!-- サイドバー -->
     <div class="sidebar">
-    <ul>
-        <li><a>ダッシュボード</a></li>
-        <li><a href="_12_kanri.shohin.php">商品追加</a></li>
-        <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
-        <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
-        <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
-        <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
-    </ul>
-</div>
+        <ul>
+            <li><a>ダッシュボード</a></li>
+            <li><a href="_12_kanri.shohin.php">商品追加</a></li>
+            <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
+            <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
+            <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
+            <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
+        </ul>
+    </div>
 
     <!-- メインコンテンツ -->
     <div class="main-content">
@@ -126,30 +140,41 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <input type="text" placeholder="ユーザー名・idなど">
             <button>検索</button>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox"></th>
-                    <th>ID</th>
-                    <th>ユーザー名</th>
-                    <th>メールアドレス</th>
-                    <th>登録日</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($users as $user): ?>
+        <form method="POST">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td><input type="checkbox" value="<?= htmlspecialchars($user['u_id']) ?>"></td>
-                        <td><?= htmlspecialchars($user['u_id']) ?></td>
-                        <td><?= htmlspecialchars($user['u_name']) ?></td>
-                        <td><?= htmlspecialchars($user['u_mail']) ?></td>
-                        <td><?= htmlspecialchars($user['registration_date']) ?></td>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>ID</th>
+                        <th>ユーザー名</th>
+                        <th>メールアドレス</th>
+                        <th>登録日</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <button class="delete-button">削除</button>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><input type="checkbox" name="delete_users[]" value="<?= htmlspecialchars($user['u_id']) ?>"></td>
+                            <td><?= htmlspecialchars($user['u_id']) ?></td>
+                            <td><?= htmlspecialchars($user['u_name']) ?></td>
+                            <td><?= htmlspecialchars($user['u_mail']) ?></td>
+                            <td><?= htmlspecialchars($user['registration_date']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <button type="submit" class="delete-button">削除</button>
+        </form>
     </div>
+
+    <script>
+        // 「すべて選択」チェックボックスの機能
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('input[name="delete_users[]"]');
+            for (const checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        });
+    </script>
 </body>
 </html>
-
