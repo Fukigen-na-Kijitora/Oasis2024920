@@ -83,7 +83,7 @@ $yama_id = $_POST['yama_id'] ?? null;
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="yama_id" value=<?= $yama_id ?>>
-        <h2>レビューの記入</h2>
+        <h2>レビューの記入をしよう！</h2>
 
         <!-- 星評価 -->
         <label for="evaluation">総合評価<span style="color: red;">(必須)</span>:</label>
