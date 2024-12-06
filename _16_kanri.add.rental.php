@@ -31,7 +31,7 @@ try {
         FROM Oasis_rental r
         JOIN Oasis_user u ON r.u_id = u.u_id
         JOIN Oasis_yama y ON r.yama_id = y.yama_id
-        WHERE u.user_name LIKE :search OR y.mountain_name LIKE :search OR r.rental_id LIKE :search
+        WHERE u_name LIKE :search OR y.mountain_name LIKE :search OR r.rental_id LIKE :search
         ORDER BY $order_by";
 
     $stmt = $pdo->prepare($sql);
@@ -147,12 +147,12 @@ try {
             <button type="submit">検索</button>
             <label for="order_by">並び替え</label>
             <select name="order_by" id="order_by" onchange="this.form.submit()">
-                <option value="r.id" <?= $order_by === 'r.id' ? 'selected' : '' ?>>標準</option>
-                <option value="u.user_name" <?= $order_by === 'u.user_name' ? 'selected' : '' ?>>ユーザー名</option>
-                <option value="y.mountain_name" <?= $order_by === 'y.mountain_name' ? 'selected' : '' ?>>山名</option>
-                <option value="r.rental_date" <?= $order_by === 'r.rental_date' ? 'selected' : '' ?>>貸出日</option>
-                <option value="r.return_date" <?= $order_by === 'r.return_date' ? 'selected' : '' ?>>返却日</option>
-                <option value="r.daily_price" <?= $order_by === 'r.daily_price' ? 'selected' : '' ?>>日割り価格</option>
+                <option value="r.id" <?= $order_by === 'rental_id' ? 'selected' : '' ?>>標準</option>
+                <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
+                <option value="y.mountain_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>山名</option>
+                <option value="r.rental_date" <?= $order_by === 'rental_start' ? 'selected' : '' ?>>貸出日</option>
+                <option value="r.return_date" <?= $order_by === 'rental_finish' ? 'selected' : '' ?>>返却日</option>
+                <option value="r.daily_price" <?= $order_by === 'dayprice' ? 'selected' : '' ?>>日割り価格</option>
             </select>
         </form>
         <table>
