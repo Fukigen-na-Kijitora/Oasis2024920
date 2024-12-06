@@ -25,9 +25,9 @@ try {
             r.rental_id, -- Oasis_rental の主キー列
             u.u_name AS user_name,
             y.yama_name AS mountain_name,
-            r.rental_date,
-            r.return_date,
-            r.daily_price
+            r.rental_start,
+            r.return_finish,
+            y.dayprice
         FROM Oasis_rental r
         JOIN Oasis_user u ON r.u_id = u.u_id
         JOIN Oasis_yama y ON r.yama_id = y.yama_id
