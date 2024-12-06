@@ -14,7 +14,7 @@ try {
     $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'r.rental_id';
 
     // 並び替え可能な列を制限
-    $valid_columns = ['r.rental_id', 'u.u_name', 'y.yama_name', 'r.rental_date', 'r.return_date', 'r.daily_price'];
+    $valid_columns = ['r.rental_id', 'u_name', 'yama_name', 'rental_start', 'rental_finish', 'dayprice'];
     if (!in_array($order_by, $valid_columns)) {
         $order_by = 'r.rental_id';
     }
