@@ -23,7 +23,7 @@ try {
     $sql = "
         SELECT 
             r.rental_id, -- Oasis_rental の主キー列
-            u.user_name AS user_name,
+            u.u_name AS user_name,
             y.yama_name AS mountain_name,
             r.rental_date,
             r.return_date,
