@@ -1,30 +1,50 @@
 <?php
-    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;
-                    dbname=LAA1602729-oasis;charset=utf8',
-                    'LAA1602729',
-                    'oasis5');
+session_start();
+
+try {
+    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //データ取得
+        // 入力データ取得
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $pass = password_hash($_POST['password'], PASSWORD_BCRYPT);// パスワードハッシュ化
+        $password = $_POST['password'];
+        $password_confirm = $_POST['password_confirm'];
 
+        // 入力データ検証
+        if (empty($name) || empty($email) || empty($password)) {
+            die('全てのフィールドを入力してください。');
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            die('正しいメールアドレスを入力してください。');
+        }
+        if ($password !== $password_confirm) {
+            die('パスワードが一致しません。');
+        }
 
-        //データベースに挿入
+        // パスワードのハッシュ化
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        // データベースに挿入
         $stmt = $pdo->prepare("INSERT INTO Oasis_user (u_name, u_mail, u_password) VALUES (:u_name, :u_mail, :u_password)");
         $stmt->bindParam(':u_name', $name);
         $stmt->bindParam(':u_mail', $email);
-        $stmt->bindParam(':u_password', $pass);
+        $stmt->bindParam(':u_password', $hashed_password);
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['user_id'] = $user['u_id'];
-        $_SESSION['user_name'] = $user['u_name'];
+        // 挿入されたユーザーIDを取得
+        $user_id = $pdo->lastInsertId();
+
+        // セッションに保存
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['user_name'] = $name;
 
         // ホーム画面にリダイレクト
         header('Location: _3_home.php');
         exit();
     }
-
+} catch (PDOException $e) {
+    die('データベースエラー: ' . $e->getMessage());
+}
 ?>

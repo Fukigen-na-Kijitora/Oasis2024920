@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     <?php
     // header.phpが同じディレクトリに存在する場合
     // もし異なる場所にある場合、適切な相対パスまたは絶対パスを指定してください
-    include './header.php'; // 修正されたパス
+    include './header.php'; // 修正された     
     ?>
 
     <!-- コンテンツ部分 -->
