@@ -19,9 +19,6 @@ try {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             die('正しいメールアドレスを入力してください。');
         }
-        if ($password !== $password_confirm) {
-            die('パスワードが一致しません。');
-        }
 
         // パスワードのハッシュ化
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
