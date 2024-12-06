@@ -1,5 +1,4 @@
 <?php
-
 // データベース接続設定
 $host = 'mysql306.phy.lolipop.lan';
 $dbname = 'LAA1602729-oasis';
@@ -123,6 +122,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
         .delete-button:hover {
             background-color: #c0392b;
         }
+        .sort-button {
+            padding: 8px 15px;
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .sort-button:hover {
+            background-color: #34495e;
+        }
     </style>
 </head>
 <body>
@@ -153,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
             </select>
 
             <!-- 昇順・降順ボタン -->
-            <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+            <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>" class="sort-button">
                 <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
             </button>
         </form>
