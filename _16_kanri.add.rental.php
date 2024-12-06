@@ -173,7 +173,7 @@ try {
                         <td><?= htmlspecialchars($row['u_name'], ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars($row['yama_name'], ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars($row['rental_start'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['rentarl_finish'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rental_finish'], ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars(number_format($row['daily_price']), ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
