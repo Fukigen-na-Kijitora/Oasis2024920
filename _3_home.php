@@ -1,12 +1,19 @@
 <?php
 session_start();
-
+ 
 if (!isset($_SESSION['user_id'])) {
     // ログインしていない場合、ログイン画面にリダイレクト
     header('Location: _2_login.php');
     exit();
 }
 
+if (isset($_GET['logout'])) {
+    // ログアウト処理
+    session_unset(); // セッション変数をすべて削除
+    session_destroy(); // セッションを破棄
+    header('Location: _2_login.php'); // ログインページにリダイレクト
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -19,11 +26,15 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
     <div class="header-img">
-        <input type="search" name="search">
+        <!-- 検索フォーム -->
+        <form method="GET" action="">
+            <input type="search" name="search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8') : ''; ?>" placeholder="山の名前で検索">
+            <button type="submit">検索</button>
+        </form>
         <img src="./images/oasislogo.jpg" width="100" height="50">
     </div>
     <hr>
-
+ 
 <?php
     $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;
                     dbname=LAA1602729-oasis;charset=utf8',
@@ -88,12 +99,15 @@ if (!isset($_SESSION['user_id'])) {
     }
 ?>
 <footer>
-<hr>
+    <hr>
     <div class="footer">
         <img src="./images/oasislogo.jpg" width="100" height="50">
         <a href="./_8_kounyurireki.php">購入履歴</a>
+        <a href="?logout=true" style="margin-left: 20px;">ログアウト</a>
     </div>
 </footer>
 <script src="./javascript/userhome.js"></script>
 </body>
 </html>
+ 
+ 
