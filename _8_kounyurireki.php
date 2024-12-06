@@ -92,7 +92,7 @@ try {
                     <!-- レビューを書くボタン -->
                         <form action="_6_addreview.php" method="POST">
                             <input type="hidden" name="yama_id" value="<?= htmlspecialchars($purchase['yama_id'], ENT_QUOTES, 'UTF-8') ?>">
-                            <button type="submit">レビューを書く</button>>
+                            <button type="submit">レビューを書く</button>
                         </form>
                     </td>
                 </tr>

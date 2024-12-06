@@ -82,7 +82,7 @@ $yama_id = $_POST['yama_id'] ?? null;
 
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="yama_id" value=<?= $yama_id ?>>
+    <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($_POST['yama_id'] ?? ''); ?>">
         <h2>レビューの記入をしよう！</h2>
 
         <!-- 星評価 -->
