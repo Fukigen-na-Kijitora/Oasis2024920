@@ -14,7 +14,7 @@ try {
 }
 
 // ユーザー情報取得
-$query = "SELECT id, name, email, registration_date FROM users";
+$query = "SELECT u_id, u_name, u_mail,registration_date FROM Oasis_user";
 $stmt = $pdo->query($query);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -109,15 +109,15 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <!-- サイドバー -->
     <div class="sidebar">
-        <h3>山崎 亮佑</h3>
-        <a href="#">ダッシュボード</a>
-        <a href="#">商品追加</a>
-        <a href="#">商品削除</a>
-        <a href="#">ユーザー管理</a>
-        <a href="#">購入商品管理</a>
-        <a href="#">レンタル商品管理</a>
-        <a href="#">ログアウト</a>
-    </div>
+    <ul>
+        <li><a>ダッシュボード</a></li>
+        <li><a href="_12_kanri.shohin.php">商品追加</a></li>
+        <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
+        <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
+        <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
+        <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
+    </ul>
+</div>
 
     <!-- メインコンテンツ -->
     <div class="main-content">
@@ -137,12 +137,12 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user): ?>
+                <?php foreach ($Oasis_user as $user): ?>
                     <tr>
-                        <td><input type="checkbox" value="<?= htmlspecialchars($user['id']) ?>"></td>
-                        <td><?= htmlspecialchars($user['id']) ?></td>
-                        <td><?= htmlspecialchars($user['name']) ?></td>
-                        <td><?= htmlspecialchars($user['email']) ?></td>
+                        <td><input type="checkbox" value="<?= htmlspecialchars($user['u_id']) ?>"></td>
+                        <td><?= htmlspecialchars($user['u_id']) ?></td>
+                        <td><?= htmlspecialchars($user['u_name']) ?></td>
+                        <td><?= htmlspecialchars($user['u_mail']) ?></td>
                         <td><?= htmlspecialchars($user['registration_date']) ?></td>
                     </tr>
                 <?php endforeach; ?>

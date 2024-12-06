@@ -161,7 +161,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 </head>
 <body>
     <!-- サイドバー -->
-  
+    <div class="sidebar">
+    <ul>
+        <li><a>ダッシュボード</a></li>
+        <li><a href="_12_kanri.shohin.php">商品追加</a></li>
+        <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
+        <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
+        <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
+        <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
+    </ul>
+</div>
+
     
 
     <!-- ヘッダー部分の読み込み（パスを修正） -->

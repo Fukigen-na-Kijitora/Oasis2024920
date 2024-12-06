@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
 }
 
 // 商品情報取得
-$query = "SELECT id, product_name, country, price FROM products";
+$query = "SELECT yama_id, yama_name, country_name, price FROM Oasis_yama";
 $stmt = $pdo->query($query);
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -119,15 +119,15 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <!-- サイドバー -->
     <div class="sidebar">
-        <h3>山崎 亮佑</h3>
-        <a href="#">ダッシュボード</a>
-        <a href="#">商品追加</a>
-        <a href="#">商品削除</a>
-        <a href="#">ユーザー管理</a>
-        <a href="#">購入商品管理</a>
-        <a href="#">レンタル商品管理</a>
-        <a href="#">ログアウト</a>
-    </div>
+    <ul>
+        <li><a>ダッシュボード</a></li>
+        <li><a href="_12_kanri.shohin.php">商品追加</a></li>
+        <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
+        <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
+        <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
+        <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
+    </ul>
+</div>
 
     <!-- メインコンテンツ -->
     <div class="main-content">
@@ -148,12 +148,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($products as $product): ?>
+                    <?php foreach ($Oasis_yama as $product): ?>
                         <tr>
-                            <td><input type="checkbox" name="delete_ids[]" value="<?= htmlspecialchars($product['id']) ?>"></td>
-                            <td><?= htmlspecialchars($product['id']) ?></td>
-                            <td><?= htmlspecialchars($product['product_name']) ?></td>
-                            <td><?= htmlspecialchars($product['country']) ?></td>
+                            <td><input type="checkbox" name="delete_ids[]" value="<?= htmlspecialchars($product['yama_id']) ?>"></td>
+                            <td><?= htmlspecialchars($product['yama_id']) ?></td>
+                            <td><?= htmlspecialchars($product['yama_name']) ?></td>
+                            <td><?= htmlspecialchars($product['country_name']) ?></td>
                             <td><?= htmlspecialchars($product['price']) ?></td>
                         </tr>
                     <?php endforeach; ?>
