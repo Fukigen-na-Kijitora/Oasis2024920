@@ -171,10 +171,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="rental_finish">終了日:</label>
             <input type="date" name="rental_finish" id="rental_finish" required onchange="calculatePrice()"><br><br>
 
-            
-        >
-
-        
             <!-- 計算された金額を表示 -->
             <p>レンタル料金: <span id="calculated_price">0円</span></p>
             <div class="terms">
