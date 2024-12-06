@@ -56,9 +56,14 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/stylesheet_4.css">
     <title>購入履歴</title>
 </head>
 <body>
+    <div class="header-img">
+        <a href="./_3_home.php"><img src="./images/oasislogo.jpg" width="100" height="50"></a>
+    </div>
+    <hr>
     <h1>購入履歴</h1>
 
     <!-- 購入情報表示 -->

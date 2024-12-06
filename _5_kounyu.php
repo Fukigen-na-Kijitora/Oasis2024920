@@ -57,62 +57,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./css/stylesheet_4.css">
+<link rel="stylesheet" href="./css/stylesheet_5.css">
 <title>購入情報入力</title>
 </head>
 <body>
 <div class="header-img">
-<a href="./_3_home.php"><img src="./images/oasislogo.jpg" width="100" height="50"></a>
+    <a href="./_3_home.php">
+        <img src="./images/oasislogo.jpg" alt="Oasis Logo">
+    </a>
 </div>
 <hr>
- 
-    <h2>購入情報入力</h2>
- 
-    <form action="" method="POST">
-<!-- 隠しフィールドで選択された山のIDと価格を送信 -->
-<input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($_POST['yama_id'] ?? ''); ?>">
-<input type="hidden" name="price" value="<?php echo htmlspecialchars($_POST['price'] ?? ''); ?>">
- 
+
+<form action="" method="POST">
+    <div class="left-column">
+        <!-- 購入者情報 -->
         <fieldset>
-<h3>1.購入者様情報</h3>
-<label for="purchaser_country">国/地域:</label>
-<select id="purchaser_country" name="purchaser_country" required>
-<option value="日本">日本</option>
-<option value="アメリカ">アメリカ</option>
-<option value="イギリス">イギリス</option>
-<option value="カナダ">カナダ</option>
-<option value="オーストラリア">オーストラリア</option>
-</select><br><br>
- 
+            <h3>1. 購入者様情報</h3>
+            <label for="purchaser_country">国/地域:</label>
+            <select id="purchaser_country" name="purchaser_country" required>
+                <option value="日本">日本</option>
+                <option value="アメリカ">アメリカ</option>
+                <option value="イギリス">イギリス</option>
+                <option value="カナダ">カナダ</option>
+                <option value="オーストラリア">オーストラリア</option>
+            </select>
+
             <label for="u_address">住所:</label>
-<input type="text" id="u_address" name="u_address" required><br><br>
- 
+            <input type="text" id="u_address" name="u_address" required>
+
             <label for="purchaser_user_name">氏名:</label>
-<input type="text" id="purchaser_user_name" name="purchaser_user_name" required><br><br>
-</fieldset>
- 
+            <input type="text" id="purchaser_user_name" name="purchaser_user_name" required>
+
+            <label for="tell">電話番号:</label>
+            <input type="text" id="tell" name="tell" placeholder="例: 000-0000-0000" required>
+        </fieldset>
+
+        <!-- 支払い方法 -->
         <fieldset>
-<h3>2.お支払方法</h3>
- 
+            <h3>2. お支払方法</h3>
             <label>
-<input type="radio" name="payment" value="VISA" required>
-<img src="./images/visa.png" alt="VISA" width="100">
-</label>
-<label>
-<input type="radio" name="payment" value="JCB" required>
-<img src="./images/jcb.png" alt="JCB" width="100">
-</label>
-<label>
-<input type="radio" name="payment" value="PayPay" required>
-<img src="./images/Paypay.jpg" alt="PayPay" width="100">
-</label>
-</fieldset>
- 
-        <fieldset>
-<input type="checkbox" name="kiyaku" required> 利用規約に同意する
-<input type="submit" value="購入する">
-</fieldset>
+                <input type="radio" name="payment" value="VISA" required>
+                <img src="./images/visa.png" alt="VISA" width="50">
+            </label>
+            <label>
+                <input type="radio" name="payment" value="JCB" required>
+                <img src="./images/jcb.png" alt="JCB" width="50">
+            </label>
+            <label>
+                <input type="radio" name="payment" value="PayPay" required>
+                <img src="./images/Paypay.jpg" alt="PayPay" width="50">
+            </label>
+        </fieldset>
+    </div>
+
+    <div class="right-column">
+        <!-- 利用規約 -->
+        <div class="terms">
+            <input type="checkbox" name="kiyaku" required> 利用規約に同意する
+        </div>
+        <!-- 購入ボタン -->
+         <input type="submit">購入する
+    </div>
+
 </form>
- 
-</body>
-</html>

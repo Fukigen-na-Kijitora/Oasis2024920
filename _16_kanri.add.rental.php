@@ -1,5 +1,5 @@
 <?php
-// データベース接続設定
+// DB接続設定
 $host = 'mysql306.phy.lolipop.lan';
 $dbname = 'LAA1602729-oasis';
 $user = 'LAA1602729';
@@ -8,33 +8,42 @@ $password = 'oasis5';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // 検索ワードと並び替え
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'r.rental_id';
+
+    // 並び替え可能な列を制限
+    $valid_columns = ['r.rental_id', 'u_name', 'yama_name', 'rental_start', 'rental_finish', 'dayprice'];
+    if (!in_array($order_by, $valid_columns)) {
+        $order_by = 'r.rental_id';
+    }
+
+    // SQLクエリ
+    $sql = "
+        SELECT 
+            r.rental_id, -- Oasis_rental の主キー列
+            u.u_name AS u_name,
+            y.yama_name AS yama_name,
+            r.rental_start,
+            r.rental_finish,
+            y.dayprice
+        FROM Oasis_rental r
+        JOIN Oasis_user u ON r.u_id = u.u_id
+        JOIN Oasis_yama y ON r.yama_id = y.yama_id
+        WHERE u_name LIKE :search OR yama_name LIKE :search OR r.rental_id LIKE :search
+        ORDER BY $order_by";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+    $stmt->execute();
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
-    echo "データベース接続エラー: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
     exit;
 }
-
-// 検索と並び替え処理
-$order_by = $_GET['order_by'] ?? 'r.rental_id';
-$search = $_GET['search'] ?? '';
-
-$sql = "
-    SELECT 
-        r.rental_id,
-        u.user_name AS user_name,
-        y.yama_name AS mountain_name,
-        r.rental_start,
-        r.return_finish,
-        y.dayprice
-    FROM Oasis_rental r
-    JOIN Oasis_user u ON r.u_id = u.u_id
-    JOIN Oasis_yama y ON r.yama_id = y.yama_id
-    WHERE u.user_name LIKE :search OR y.mountain_name LIKE :search OR r.id LIKE :search
-    ORDER BY $order_by";
-
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-$stmt->execute();
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -138,12 +147,12 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button type="submit">検索</button>
             <label for="order_by">並び替え</label>
             <select name="order_by" id="order_by" onchange="this.form.submit()">
-                <option value="r.id" <?= $order_by === 'r.id' ? 'selected' : '' ?>>標準</option>
-                <option value="u.user_name" <?= $order_by === 'u.user_name' ? 'selected' : '' ?>>ユーザー名</option>
-                <option value="y.mountain_name" <?= $order_by === 'y.mountain_name' ? 'selected' : '' ?>>山名</option>
-                <option value="r.rental_date" <?= $order_by === 'r.rental_date' ? 'selected' : '' ?>>貸出日</option>
-                <option value="r.return_date" <?= $order_by === 'r.return_date' ? 'selected' : '' ?>>返却日</option>
-                <option value="r.daily_price" <?= $order_by === 'r.daily_price' ? 'selected' : '' ?>>日割り価格</option>
+                <option value="r.id" <?= $order_by === 'rental_id' ? 'selected' : '' ?>>標準</option>
+                <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
+                <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>山名</option>
+                <option value="r.rental_start" <?= $order_by === 'rental_start' ? 'selected' : '' ?>>貸出日</option>
+                <option value="r.rental_finish" <?= $order_by === 'rental_finish' ? 'selected' : '' ?>>返却日</option>
+                <option value="r.dayprice" <?= $order_by === 'dayprice' ? 'selected' : '' ?>>日割り価格</option>
             </select>
         </form>
         <table>
@@ -160,12 +169,12 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <tbody>
                 <?php foreach ($results as $row): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['id'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['user_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['mountain_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['rental_date'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['return_date'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars(number_format($row['daily_price']), ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rental_id'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['u_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['yama_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rental_start'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rental_finish'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars(number_format($row['dayprice']), ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

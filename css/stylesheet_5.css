@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+}
+
+/* ロゴとヘッダー */
+.header-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #ffffff;
+}
+
+.header-img img {
+    display: block;
+    max-width: 120px;
+    height: auto;
+}
+
+/* 全体レイアウト */
+form {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+form > fieldset {
+    border: none;
+    padding: 0;
+}
+
+/* 左カラム: 購入者情報と支払い方法 */
+.left-column {
+    width: 60%;
+    margin-right: 20px;
+}
+
+.left-column h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+img {
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+/* 右カラム: 請求額 */
+.right-column {
+    width: 30%;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.right-column h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.right-column .total-price {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.right-column button {
+    background-color: #ffcc00;
+    border: none;
+    color: #000;
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.right-column button:hover {
+    background-color: #e6b800;
+}
+
+/* 利用規約 */
+.terms {
+    margin-top: 20px;
+    font-size: 0.8em;
+}

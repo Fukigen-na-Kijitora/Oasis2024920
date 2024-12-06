@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/stylesheet_4.css">
+    <link rel="stylesheet" href="./css/stylesheet_5.css">
     <title>レンタル</title>
     <script>
         function calculatePrice() {
@@ -116,16 +116,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <div class="header-img">
-<a href="./_3_home.php"><img src="./images/oasislogo.jpg" width="100" height="50"></a>
+<a href="./_3_home.php"><img src="./images/oasislogo.jpg" alt="Oasis Logo"></a>
+
 </div>
 <hr>
-    <h2>レンタル情報</h2>
-
-    <form action="" method="POST">
+    
+<form action="" method="POST">
+    <div class="left-column">        
         <!-- 隠しフィールドで選択された山のIDを送信 -->
         <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($_POST['yama_id'] ?? ''); ?>">
         <fieldset>
-            <h3>1. 購入者様情報</h3>
+            <h3>1. レンタル情報</h3>
             <label for="purchaser_country">国/地域:</label>
             <select id="purchaser_country" name="purchaser_country" required>
                 <option value="日本">日本</option>
@@ -142,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" id="u_address" name="u_address" required><br><br>
 
             <label for="u_tell">電話番号:</label>
-            <input type="text" id="u_tell" name="u_tell" required><br><br>
+            <input type="text" id="u_tell" name="u_tell" placeholder="例: 000-0000-0000" required><br><br>
         </fieldset>
 
         <fieldset>
@@ -160,8 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="./images/Paypay.jpg" alt="PayPay" width="100">
             </label><br><br>
         </fieldset>
+    </div>
 
-        <fieldset>
+        <div class="right-column">
             <h3>3. レンタル期間</h3>
             <label for="rental_start">開始日:</label>
             <input type="date" name="rental_start" id="rental_start" value="<?php echo $current_date; ?>" required onchange="calculatePrice()"><br><br>
@@ -169,15 +171,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="rental_finish">終了日:</label>
             <input type="date" name="rental_finish" id="rental_finish" required onchange="calculatePrice()"><br><br>
 
-            
-        </fieldset>
-
-        <fieldset>
             <!-- 計算された金額を表示 -->
             <p>レンタル料金: <span id="calculated_price">0円</span></p>
-            <input type="checkbox" name="kiyaku" required> 利用規約に同意する
+            <div class="terms">
+                <input type="checkbox" name="kiyaku" required> 利用規約に同意する
+            </div>
             <input type="submit" value="レンタルする">
-        </fieldset>
+        </div>
     </form>
 </body>
 </html>

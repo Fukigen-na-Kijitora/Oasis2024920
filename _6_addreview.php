@@ -65,59 +65,52 @@ $yama_id = $_POST['yama_id'] ?? null;
 
 <!DOCTYPE html>
 <html lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/stylesheet_4.css">
+    <link rel="stylesheet" href="./css/stylesheet_6.css">
     <title>レビュー投稿</title>
 </head>
 <body>
+    <!-- ロゴ -->
     <div class="header-img">
         <a href="./_3_home.php"><img src="./images/oasislogo.jpg" width="100" height="50" alt="Oasis Logo"></a>
     </div>
-    <hr>
 
-    <h2>レビューを投稿する</h2>
-
-    <?php if (!empty($error_message)): ?>
-        <p style="color: red;"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
-    <?php endif; ?>
-
-    <!-- 評価フォーム -->
+    <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($yama_id); ?>"> <!-- yama_idをhiddenで送信 -->
+        <h2>レビューの記入</h2>
 
-        <label for="evaluation">評価:</label>
+        <!-- 星評価 -->
+        <label for="evaluation">総合評価<span style="color: red;">(必須)</span>:</label>
         <div class="star-rating">
-            <input type="radio" name="evaluation" value="1" id="star1">
-            <label for="star1">★</label>
+            <input type="radio" name="evaluation" value="5" id="star5" required>
+            <label for="star5">★</label>
 
-            <input type="radio" name="evaluation" value="2" id="star2">
-            <label for="star2">★</label>
+            <input type="radio" name="evaluation" value="4" id="star4">
+            <label for="star4">★</label>
 
             <input type="radio" name="evaluation" value="3" id="star3">
             <label for="star3">★</label>
 
-            <input type="radio" name="evaluation" value="4" id="star4">
-            <label for="star4">★</label>
+            <input type="radio" name="evaluation" value="2" id="star2">
+            <label for="star2">★</label>
             
-            <input type="radio" name="evaluation" value="5" id="star5">
-            <label for="star5">★</label>
+            <input type="radio" name="evaluation" value="1" id="star1">
+            <label for="star1">★</label>
         </div>
 
+        <!-- コメント -->
+        <label for="review_detail">コメント<span style="color: red;">(必須)</span>:</label>
+        <textarea name="review_detail" id="review_detail" required></textarea>
 
-        <br><br>
-
-        <label for="review_detail">レビュー詳細:</label>
-        <textarea name="review_detail" id="review_detail" rows="5" required></textarea>
-        
-        <br><br>
-
-        <label for="review_img">レビュー画像（任意）:</label>
+        <!-- 画像アップロード -->
+        <label for="review_img">画像アップロード<span style="color: gray;">(任意)</span>:</label>
         <input type="file" name="review_img" id="review_img">
 
-        <br><br>
-
+        <!-- 投稿ボタン -->
         <input type="submit" value="レビューを投稿する">
     </form>
 </body>
