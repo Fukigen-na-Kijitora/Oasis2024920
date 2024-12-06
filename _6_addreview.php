@@ -13,6 +13,7 @@ $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;char
 // エラーメッセージを保持する変数
 $error_message = "";
 
+
 // フォームデータの処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
@@ -81,6 +82,7 @@ $yama_id = $_POST['yama_id'] ?? null;
 
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="yama_id" value=>
         <h2>レビューの記入</h2>
 
         <!-- 星評価 -->
