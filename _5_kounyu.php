@@ -97,15 +97,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h3>2. お支払方法</h3>
             <label>
                 <input type="radio" name="payment" value="VISA" required>
-                <img src="./images/visa.png" alt="VISA" width="50">
+                <img src="./images/visa.png" alt="VISA" width="100">
             </label>
             <label>
                 <input type="radio" name="payment" value="JCB" required>
-                <img src="./images/jcb.png" alt="JCB" width="50">
+                <img src="./images/jcb.png" alt="JCB" width="100">
             </label>
             <label>
                 <input type="radio" name="payment" value="PayPay" required>
-                <img src="./images/Paypay.jpg" alt="PayPay" width="50">
+                <img src="./images/Paypay.jpg" alt="PayPay" width="100">
             </label>
         </fieldset>
     </div>
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="checkbox" name="kiyaku" required> 利用規約に同意する
         </div>
         <!-- 購入ボタン -->
-         <input type="submit">購入する
+         <h3><input type="submit">購入する</h3>
     </div>
 
 </form>
