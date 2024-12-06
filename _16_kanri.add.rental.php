@@ -23,8 +23,8 @@ try {
     $sql = "
         SELECT 
             r.rental_id, -- Oasis_rental の主キー列
-            u.u_name AS user_name,
-            y.yama_name AS mountain_name,
+            u.u_name AS u_name,
+            y.yama_name AS yama_name,
             r.rental_start,
             r.rental_finish,
             y.dayprice
@@ -169,11 +169,11 @@ try {
             <tbody>
                 <?php foreach ($results as $row): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['id'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['user_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['mountain_name'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['rental_date'], ENT_QUOTES) ?></td>
-                        <td><?= htmlspecialchars($row['return_date'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rental_id'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['u_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['yama_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rental_start'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['rentarl_finish'], ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars(number_format($row['daily_price']), ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
