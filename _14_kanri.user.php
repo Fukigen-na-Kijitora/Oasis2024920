@@ -140,6 +140,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
     <!-- メインコンテンツ -->
     <div class="main-content">
         <h1>ユーザー情報</h1>
+
+        <!-- 並び替えフォーム -->
+        <form method="GET">
+            <label for="order_by">並び替え</label>
+            <select name="order_by" id="order_by" onchange="this.form.submit()">
+                <option value="u_id" <?= $order_by === 'u_id' ? 'selected' : '' ?>>ID</option>
+                <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
+                <option value="u_mail" <?= $order_by === 'u_mail' ? 'selected' : '' ?>>メールアドレス</option>
+                <option value="registration_date" <?= $order_by === 'registration_date' ? 'selected' : '' ?>>登録日</option>
+            </select>
+
+            <!-- 昇順・降順ボタン -->
+            <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+                <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
+            </button>
+        </form>
+
         <div class="search-box">
             <input type="text" placeholder="ユーザー名・idなど">
             <button>検索</button>
@@ -149,10 +166,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all"></th>
-                        <th><a href="?order_by=u_id&order_dir=<?= ($order_by == 'u_id' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">ID</a></th>
-                        <th><a href="?order_by=u_name&order_dir=<?= ($order_by == 'u_name' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">ユーザー名</a></th>
-                        <th><a href="?order_by=u_mail&order_dir=<?= ($order_by == 'u_mail' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">メールアドレス</a></th>
-                        <th><a href="?order_by=registration_date&order_dir=<?= ($order_by == 'registration_date' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">登録日</a></th>
+                        <th>ID</th>
+                        <th>ユーザー名</th>
+                        <th>メールアドレス</th>
+                        <th>登録日</th>
                     </tr>
                 </thead>
                 <tbody>
