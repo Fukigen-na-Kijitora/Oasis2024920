@@ -13,35 +13,19 @@ try {
     exit;
 }
 
-// フォーム送信処理
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $region = $_POST['region'] ?? '';
-    $mountain_name = $_POST['mountain_name'] ?? '';
-    $price = $_POST['price'] ?? '';
-    $details = $_POST['details'] ?? '';
-    $image_path = '';
+// 検索と並び替え処理
+$order_by = $_GET['order_by'] ?? 'buy_id';
+$search = $_GET['search'] ?? '';
 
-    // 画像のアップロード処理
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = 'uploads/';
-        $image_path = $upload_dir . basename($_FILES['image']['name']);
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $image_path)) {
-            echo "画像アップロードに失敗しました。";
-            exit;
-        }
-    }
+$sql = "SELECT buy_id, purchaser_user_name, yama_id, order_date, price, purchaser_country 
+        FROM Oasis_buy 
+        WHERE purchaser_user_name LIKE :search OR buy_id LIKE :search
+        ORDER BY $order_by";
 
-    // データベースに挿入
-    $stmt = $pdo->prepare("INSERT INTO products (region, mountain_name, price, details, image_path) VALUES (:region, :mountain_name, :price, :details, :image_path)");
-    $stmt->bindParam(':region', $region);
-    $stmt->bindParam(':mountain_name', $mountain_name);
-    $stmt->bindParam(':price', $price);
-    $stmt->bindParam(':details', $details);
-    $stmt->bindParam(':image_path', $image_path);
-    $stmt->execute();
-
-    echo "商品が追加されました！";
-}
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品追加</title>
+    <title>購入商品管理</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,29 +69,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 20px;
         }
         form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        input, select, textarea {
-            width: 100%;
+        input[type="text"] {
             padding: 10px;
-            margin-bottom: 10px;
+            width: 200px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box;
+            margin-right: 10px;
+        }
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
         button {
+            padding: 10px 20px;
+            border: none;
             background-color: #2c3e50;
             color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
             border-radius: 5px;
+            cursor: pointer;
         }
         button:hover {
             background-color: #34495e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        table th {
+            background-color: #2c3e50;
+            color: #fff;
         }
     </style>
 </head>
@@ -122,31 +122,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
 </div>
-
     <div class="main-content">
-        <h1>商品追加</h1>
-        <form method="POST" enctype="multipart/form-data">
-            <label for="region">国/地域</label>
-            <select name="region" id="region">
-                <option value="Japan">Japan</option>
-                <option value="USA">USA</option>
-                <option value="France">France</option>
+        <h1>購入商品管理</h1>
+        <form method="GET">
+            <input type="text" name="search" placeholder="ユーザー名・idなど" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
+            <button type="submit">検索</button>
+            <label for="order_by">並び替え</label>
+            <select name="order_by" id="order_by" onchange="this.form.submit()">
+                <option value="buy_id" <?= $order_by === 'buy_id' ? 'selected' : '' ?>>標準</option>
+                <option value="purchaser_user_name" <?= $order_by === 'purchaser_user_name' ? 'selected' : '' ?>>ユーザー名</option>
+                <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>山ID</option>
+                <option value="order_date" <?= $order_by === 'order_date' ? 'selected' : '' ?>>購入日</option>
+                <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
             </select>
-
-            <label for="mountain_name">山名</label>
-            <input type="text" name="mountain_name" id="mountain_name" placeholder="例：○○山" required>
-
-            <label for="price">金額</label>
-            <input type="number" name="price" id="price" placeholder="例：100000000" required>
-
-            <label for="details">詳細</label>
-            <textarea name="details" id="details" placeholder="例：日本最高峰の山" rows="4" required></textarea>
-
-            <label for="image">画像</label>
-            <input type="file" name="image" id="image" accept="image/*" required>
-
-            <button type="submit">商品を追加する</button>
         </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>購入ID</th>
+                    <th>ユーザー名</th>
+                    <th>山ID</th>
+                    <th>購入日</th>
+                    <th>価格</th>
+                    <th>国</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($results as $row): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['buy_id'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['purchaser_user_name'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['yama_id'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['order_date'], ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars(number_format($row['price']), ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($row['purchaser_country'], ENT_QUOTES) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
