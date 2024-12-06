@@ -13,6 +13,15 @@ try {
     exit;
 }
 
+// 並び替え設定
+$order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'u_id';
+$order_dir = isset($_GET['order_dir']) && $_GET['order_dir'] == 'desc' ? 'desc' : 'asc';
+
+// ユーザー情報取得（並び替え）
+$query = "SELECT u_id, u_name, u_mail, registration_date FROM Oasis_user ORDER BY $order_by $order_dir";
+$stmt = $pdo->query($query);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
     $delete_ids = $_POST['delete_users'];
@@ -26,11 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
     header("Location: " . $_SERVER['PHP_SELF']); // リロード
     exit;
 }
-
-// ユーザー情報取得
-$query = "SELECT u_id, u_name, u_mail, registration_date FROM Oasis_user";
-$stmt = $pdo->query($query);
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -136,6 +140,23 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- メインコンテンツ -->
     <div class="main-content">
         <h1>ユーザー情報</h1>
+
+        <!-- 並び替えフォーム -->
+        <form method="GET">
+            <label for="order_by">並び替え</label>
+            <select name="order_by" id="order_by" onchange="this.form.submit()">
+                <option value="u_id" <?= $order_by === 'u_id' ? 'selected' : '' ?>>ID</option>
+                <option value="u_name" <?= $order_by === 'u_name' ? 'selected' : '' ?>>ユーザー名</option>
+                <option value="u_mail" <?= $order_by === 'u_mail' ? 'selected' : '' ?>>メールアドレス</option>
+                <option value="registration_date" <?= $order_by === 'registration_date' ? 'selected' : '' ?>>登録日</option>
+            </select>
+
+            <!-- 昇順・降順ボタン -->
+            <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+                <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
+            </button>
+        </form>
+
         <div class="search-box">
             <input type="text" placeholder="ユーザー名・idなど">
             <button>検索</button>
