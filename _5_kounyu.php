@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="checkbox" name="kiyaku" required> 利用規約に同意する
         </div>
         <!-- 購入ボタン -->
-         <h3><input type="submit">購入する</h3>
+         <input type="submit">購入する
     </div>
 
 </form>
