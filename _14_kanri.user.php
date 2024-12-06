@@ -13,6 +13,15 @@ try {
     exit;
 }
 
+// 並び替え設定
+$order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'u_id';
+$order_dir = isset($_GET['order_dir']) && $_GET['order_dir'] == 'desc' ? 'desc' : 'asc';
+
+// ユーザー情報取得（並び替え）
+$query = "SELECT u_id, u_name, u_mail, registration_date FROM Oasis_user ORDER BY $order_by $order_dir";
+$stmt = $pdo->query($query);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
     $delete_ids = $_POST['delete_users'];
@@ -26,11 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_users'])) {
     header("Location: " . $_SERVER['PHP_SELF']); // リロード
     exit;
 }
-
-// ユーザー情報取得
-$query = "SELECT u_id, u_name, u_mail, registration_date FROM Oasis_user";
-$stmt = $pdo->query($query);
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -145,10 +149,10 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all"></th>
-                        <th>ID</th>
-                        <th>ユーザー名</th>
-                        <th>メールアドレス</th>
-                        <th>登録日</th>
+                        <th><a href="?order_by=u_id&order_dir=<?= ($order_by == 'u_id' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">ID</a></th>
+                        <th><a href="?order_by=u_name&order_dir=<?= ($order_by == 'u_name' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">ユーザー名</a></th>
+                        <th><a href="?order_by=u_mail&order_dir=<?= ($order_by == 'u_mail' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">メールアドレス</a></th>
+                        <th><a href="?order_by=registration_date&order_dir=<?= ($order_by == 'registration_date' && $order_dir == 'asc') ? 'desc' : 'asc' ?>">登録日</a></th>
                     </tr>
                 </thead>
                 <tbody>
