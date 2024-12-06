@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <form action="" method="POST">
     <div class="left-column">
         <!-- 購入者情報 -->
+         <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($_POST['yama_id'] ?? ''); ?>">
         <fieldset>
             <h3>1. 購入者様情報</h3>
             <label for="purchaser_country">国/地域:</label>
