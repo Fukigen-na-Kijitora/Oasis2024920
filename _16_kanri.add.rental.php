@@ -14,14 +14,14 @@ try {
 }
 
 // 並べ替えと検索処理
-$order_by = $_GET['order_by'] ?? 'id';
+$order_by = $_GET['order_by'] ?? 'renral_id';
 $search = $_GET['search'] ?? '';
 
 $sql = "SELECT * FROM Oasis_rental WHERE purchaser_u_name LIKE :search OR rental_id LIKE :search ORDER BY $order_by";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
 $stmt->execute();
-$rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$Oasis_rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -126,7 +126,7 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button type="submit">検索</button>
             <label for="order_by">並び替え</label>
             <select name="order_by" id="order_by" onchange="this.form.submit()">
-                <option value="id" <?= $order_by === 'id' ? 'selected' : '' ?>>標準</option>
+                <option value="rental_id" <?= $order_by === 'rental_id' ? 'selected' : '' ?>>標準</option>
                 <option value="user_name" <?= $order_by === 'user_name' ? 'selected' : '' ?>>ユーザー名</option>
                 <option value="mountain_name" <?= $order_by === 'mountain_name' ? 'selected' : '' ?>>山名</option>
                 <option value="rental_date" <?= $order_by === 'rental_date' ? 'selected' : '' ?>>貸出日</option>
