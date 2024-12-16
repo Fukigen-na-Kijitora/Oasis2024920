@@ -32,8 +32,8 @@
     
         // 結果を取得
         $result = $stmt->fetch(PDO::FETCH_ASSOC);  // 1件の結果を連想配列として取得
-    }?>
-    
+    }
+    ?>
         <!--取得したデータを表示-->
         <div class="body_img">
             <img id="mt_img" src="<?= $result['yama_img'] ?>" alt="<?= $result['yama_name'] ?>">
