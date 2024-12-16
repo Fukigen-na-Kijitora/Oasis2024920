@@ -34,39 +34,42 @@ if (isset($_GET['logout'])) {
         <img src="./images/oasislogo.jpg" width="100" height="50">
     </div>
     <hr>
+ 
 <?php
     $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;
                     dbname=LAA1602729-oasis;charset=utf8',
                     'LAA1602729',
                     'oasis5');
 
+
     //海外の山画像
     $sql1 = "SELECT `yama_img`, `yama_name` FROM `Oasis_yama` WHERE `Region` = 1 ";
     $result1 = $pdo->query($sql1);
     $rows1 = $result1->fetchAll(PDO::FETCH_ASSOC);
+
     $rowCount = count($rows1);
 
+    if($rowCount > 0){
+        echo '<h2 class="h2">海外</h2>';
+        echo '<div class="img-container-wrapper">';
+        echo '<button class="Arrow left" data-target="img-container-1">&lt;</button>';
+        echo '<div class="img-container" id="img-container-1">';
+            foreach ($rows1 as $row) {
+                echo '<div class="img-slide">';
+                echo '<form action="_4_shohin.php" method="POST">';
+                echo '<input type="hidden" name="name" value="' . htmlspecialchars($row["yama_name"], ENT_QUOTES, 'UTF-8') . '">';
+                echo '<button type="submit" class="img-transition">';
+                echo '<img src="' . $row["yama_img"] . '" alt="'. $row["yama_name"] . '">';
+                echo '</button>';
+                echo '<p>'. $row["yama_name"]. '</p>';
+                echo '</form>';
+                echo '</div>';
+            }
+        echo '</div>';
+        echo '<button class="Arrow right" data-target="img-container-1">&gt;</button>';
+        echo '</div>';
+    }
 
-    if($rowCount > 0) ?>
-        <h2 class="h2">海外</h2>
-            <div class="img-container-wrapper">
-            <button class="Arrow left" data-target="img-container-1">&lt;</button>
-                <div class="img-container" id="img-container-1">
-                    <?php foreach ($rows1 as $row) ?>
-                        <div class="img-slide">
-                            <form action="_4_shohin.php" method="POST">
-                                <input type="hidden" name="name" value="<?= htmlspecialchars($row["yama_name"], ENT_QUOTES, 'UTF-8') ?>">
-                                <button type="submit" class="img-transition">'
-                                    <img src="<?= $row["yama_img"] ?>" alt="<?= $row["yama_name"] ?>">
-                                </button>
-                                <p><?= $row["yama_name"] ?></p>
-                            </form>
-                        </div>
-                </div>
-                <button class="Arrow right" data-target="img-container-1">&gt;</button>;
-            </div>
-
-    <?php
     //国内の山画像
     $sql2 = "SELECT `yama_img`, `yama_name` FROM `Oasis_yama` WHERE `Region` = 0 ";
     $result2 = $pdo->query($sql2);
@@ -74,24 +77,27 @@ if (isset($_GET['logout'])) {
 
     $rowCount = count($rows2);
 
-    if($rowCount > 0)?>
-        <h2 class="h2">国内</h2>
-            <div class="img-container-wrapper">
-            <button class="Arrow left" data-target="img-container-2">&lt;</button>
-                <div class="img-container" id="img-container-2">
-                    <?php foreach ($rows2 as $row) ?>
-                        <div class="img-slide">
-                            <form action="_4_shohin.php" method="POST">
-                                <input type="hidden" name="name" value="<?= htmlspecialchars($row["yama_name"], ENT_QUOTES, 'UTF-8') ?>">
-                                <button type="submit" class="img-transition">
-                                    <img src="<?= $row["yama_img"] ?>" alt="<?= $row["yama_name"] ?>">
-                                </button>
-                                <p><?= $row["yama_name"] ?></p>
-                            </form>
-                        </div>
-                </div>
-            <div class="Arrow right" data-target="img-container-2">&gt;</div>
-        </div>
+    if($rowCount > 0){
+        echo '<h2 class="h2">国内</h2>';
+        echo '<div class="img-container-wrapper">';
+        echo '<button class="Arrow left" data-target="img-container-2">&lt;</button>';
+        echo '<div class="img-container" id="img-container-2">';
+            foreach ($rows2 as $row) {
+                echo '<div class="img-slide">';
+                echo '<form action="_4_shohin.php" method="POST">';
+                echo '<input type="hidden" name="name" value="' . htmlspecialchars($row["yama_name"], ENT_QUOTES, 'UTF-8') . '">';
+                echo '<button type="submit" class="img-transition">';
+                echo '<img src="' . $row["yama_img"] . '" alt="'. $row["yama_name"] . '">';
+                echo '</button>';
+                echo '<p>'. $row["yama_name"]. '</p>';
+                echo '</form>';
+                echo '</div>';
+            }
+        echo '</div>';
+        echo '<div class="Arrow right" data-target="img-container-2">&gt;</div>';
+        echo '</div>';
+    }
+?>
 <footer>
     <hr>
     <div class="footer">
