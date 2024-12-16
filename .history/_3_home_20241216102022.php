@@ -46,6 +46,7 @@ if (isset($_GET['logout'])) {
     $rows1 = $result1->fetchAll(PDO::FETCH_ASSOC);
     $rowCount = count($rows1);
 
+
     if($rowCount > 0) ?>
         <h2 class="h2">海外</h2>
             <div class="img-container-wrapper">
@@ -70,6 +71,7 @@ if (isset($_GET['logout'])) {
     $sql2 = "SELECT `yama_img`, `yama_name` FROM `Oasis_yama` WHERE `Region` = 0 ";
     $result2 = $pdo->query($sql2);
     $rows2 = $result2->fetchAll(PDO::FETCH_ASSOC);
+
     $rowCount = count($rows2);
 
     if($rowCount > 0)?>
