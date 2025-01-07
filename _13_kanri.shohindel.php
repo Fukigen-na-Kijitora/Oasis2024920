@@ -12,22 +12,30 @@ try {
     echo "データベース接続エラー: " . $e->getMessage();
     exit;
 }
-// 検索と並び替え処理
-$order_by = $_GET['order_by'] ?? 'yama_id';
-$order_dir = $_GET['order_dir'] ?? 'asc';
-$search = $_GET['search'] ?? '';
 
-$sql = "
-    SELECT yama_name, yama_id
-    FROM Oasis_yama
-    WHERE yama_name LIKE :search OR yama_id LIKE :search
-    ORDER BY yama_id ASC";
+   // 検索ワードと並び替え
+   $search = isset($_GET['search']) ? $_GET['search'] : '';
+   $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'yama_id';
+   $order_dir = isset($_GET['order_dir']) ? $_GET['order_dir'] : 'asc'; // 昇順/降順
 
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-$stmt->execute();
+   // 並び替え可能な列を制限
+   $valid_columns = ['yama_id', 'yama_name', 'yama_country', 'price'];
+   if (!in_array($order_by, $valid_columns)) {
+       $order_by = 'yama_id';
+   }
 
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+   // SQLクエリ
+   $sql = "
+       SELECT yama_id, yama_name, yama_country, price
+       FROM Oasis_yama
+       WHERE yama_name LIKE :search OR yama_country LIKE :search OR yama_id LIKE :search
+       ORDER BY $order_by $order_dir";
+
+   $stmt = $pdo->prepare($sql);
+   $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+   $stmt->execute();
+
+   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
