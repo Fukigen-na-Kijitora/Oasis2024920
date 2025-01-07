@@ -7,6 +7,8 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: ./_2_login.php');
     exit;
 }
+
+
  
 // ユーザーIDを取得
 $user_id = $_SESSION['user_id'];

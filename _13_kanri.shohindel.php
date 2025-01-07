@@ -12,21 +12,7 @@ try {
     echo "データベース接続エラー: " . $e->getMessage();
     exit;
 }
-// 検索と並び替え処理
-$order_by = $_GET['order_by'] ?? 'buy_id';
-$order_dir = $_GET['order_dir'] ?? 'asc';
-$search = $_GET['search'] ?? '';
-
-$sql = "SELECT buy_id, yama_name, country_name,price, 
-        FROM Oasis_yama
-        WHERE yama_name LIKE :search OR buy_id LIKE :search
-        ORDER BY $order_by $order_dir";
-
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-$stmt->execute();
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+ 
 // 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     if (!empty($_POST['delete_ids'])) {
@@ -130,7 +116,6 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     </style>
 </head>
-
 <body>
     <!-- サイドバー -->
     <div class="sidebar">
@@ -141,16 +126,8 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
-    </div>
-    <div class="main-content">        
-        <label for="order_by">並び替え</label>
-        <select name="order_by" id="order_by" onchange="this.form.submit()">
-            <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>標準</option>
-            <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>商品名</option>
-            <option value="country_name" <?= $order_by === 'country_name' ? 'selected' : '' ?>>国名</option>
-            <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
-        </select>
-
+</div>
+ 
     <!-- メインコンテンツ -->
     <div class="main-content">
         <h1>商品削除</h1>

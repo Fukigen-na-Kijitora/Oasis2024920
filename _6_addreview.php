@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($yama_id ?? ''); ?>">
+    <input type="hidden" name="yama_id" value="<?php echo $yama_id ?? ''; ?>">
         <h2>レビューの記入をしよう！</h2>
 
         <!-- 星評価 -->
