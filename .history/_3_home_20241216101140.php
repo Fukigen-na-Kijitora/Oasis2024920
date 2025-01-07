@@ -27,7 +27,7 @@ if (isset($_GET['logout'])) {
 <body>
     <div class="header-img">
         <!-- 検索フォーム -->
-        <form method="get" action="./_3_home.php">
+        <form method="GET" action="">
             <input type="search" name="search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8') : ''; ?>" placeholder="山の名前で検索">
             <button type="submit">検索</button>
         </form>
@@ -45,6 +45,7 @@ if (isset($_GET['logout'])) {
     $result1 = $pdo->query($sql1);
     $rows1 = $result1->fetchAll(PDO::FETCH_ASSOC);
     $rowCount = count($rows1);
+
 
     if($rowCount > 0) ?>
         <h2 class="h2">海外</h2>
@@ -70,6 +71,7 @@ if (isset($_GET['logout'])) {
     $sql2 = "SELECT `yama_img`, `yama_name` FROM `Oasis_yama` WHERE `Region` = 0 ";
     $result2 = $pdo->query($sql2);
     $rows2 = $result2->fetchAll(PDO::FETCH_ASSOC);
+
     $rowCount = count($rows2);
 
     if($rowCount > 0)?>
