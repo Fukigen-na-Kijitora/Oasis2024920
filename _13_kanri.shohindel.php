@@ -17,14 +17,16 @@ $order_by = $_GET['order_by'] ?? 'yama_id';
 $order_dir = $_GET['order_dir'] ?? 'asc';
 $search = $_GET['search'] ?? '';
 
-$sql = "SELECT buy_id, yama_name, country_name,price, 
-        FROM Oasis_yama
-        WHERE yama_name LIKE :search OR yama_id LIKE :search
-        ORDER BY $order_by $order_dir";
+$sql = "
+    SELECT yama_name, yama_id
+    FROM Oasis_yama
+    WHERE yama_name LIKE :search OR yama_id LIKE :search
+    ORDER BY yama_id ASC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
 $stmt->execute();
+
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 削除処理
