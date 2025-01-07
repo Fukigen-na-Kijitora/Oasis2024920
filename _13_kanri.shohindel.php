@@ -130,7 +130,7 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
  
     <!-- メインコンテンツ -->
     <div class="main-content">
-        <h1>商品一覧</h1>
+        <h1>商品削除</h1>
         <form method="POST" action="">
             <div class="search-box">
                 <input type="text" placeholder="商品名・国名など">
