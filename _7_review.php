@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+//CSRFトークンの検証
+if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die("不正なリクエストです。");
+}
+
 // データベース接続
 $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
 
