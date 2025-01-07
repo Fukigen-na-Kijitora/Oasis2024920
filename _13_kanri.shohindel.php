@@ -144,23 +144,22 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
     </div>
-    <div class="sort">
+    <!-- メインコンテンツ -->
+    <div class="main-content">
+        <h1>商品削除</h1>
+        <form method="GET">
+        <input type="text" name="search" placeholder="商品名・国名など" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
+        <button type="submit">検索</button>
         <label for="order_by">並び替え</label>
         <select name="order_by" id="order_by" onchange="this.form.submit()">
             <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>標準</option>
             <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>商品名</option>
-            <option value="country_name" <?= $order_by === 'country_name' ? 'selected' : '' ?>>国名</option>
+            <option value="yama_country" <?= $order_by === 'yama_country' ? 'selected' : '' ?>>国名</option>
             <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
         </select>
-
-    <!-- メインコンテンツ -->
-    <div class="main-content">
-        <h1>商品削除</h1>
-        <form method="POST" action="">
-            <div class="search-box">
-                <input type="text" placeholder="商品名・国名など">
-                <button type="button">検索</button>
-            </div>
+        <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+            <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
+        </button>            </div>
             <table class="table">
                 <thead>
                     <tr>
