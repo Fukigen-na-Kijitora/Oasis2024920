@@ -17,9 +17,9 @@ $order_by = $_GET['order_by'] ?? 'buy_id';
 $order_dir = $_GET['order_dir'] ?? 'asc';
 $search = $_GET['search'] ?? '';
 
-$sql = "SELECT buy_id, purchaser_user_name, yama_id, order_date, price, purchaser_country 
-        FROM Oasis_buy 
-        WHERE purchaser_user_name LIKE :search OR buy_id LIKE :search
+$sql = "SELECT buy_id, yama_name, country_name,price, 
+        FROM Oasis_yama
+        WHERE yama_name LIKE :search OR buy_id LIKE :search
         ORDER BY $order_by $order_dir";
 
 $stmt = $pdo->prepare($sql);
@@ -145,10 +145,9 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="main-content">        
         <label for="order_by">並び替え</label>
         <select name="order_by" id="order_by" onchange="this.form.submit()">
-            <option value="buy_id" <?= $order_by === 'buy_id' ? 'selected' : '' ?>>標準</option>
-            <option value="purchaser_user_name" <?= $order_by === 'purchaser_user_name' ? 'selected' : '' ?>>ユーザー名</option>
-            <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>山ID</option>
-            <option value="order_date" <?= $order_by === 'order_date' ? 'selected' : '' ?>>購入日</option>
+            <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>標準</option>
+            <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>商品名</option>
+            <option value="country_name" <?= $order_by === 'country_name' ? 'selected' : '' ?>>国名</option>
             <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
         </select>
 
