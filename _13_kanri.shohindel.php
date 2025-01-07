@@ -25,6 +25,7 @@ $sql = "SELECT buy_id, yama_name, country_name,price,
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
 $stmt->execute();
+
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 削除処理
