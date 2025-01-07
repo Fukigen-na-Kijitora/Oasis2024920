@@ -2,18 +2,7 @@
 session_start();
 
 try {
-    // .envファイルのロード
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv -> load();
-
-    $dsn = 'mysql:host=' .getenv('DB_HOST') . ';dbname=' .getenv('DB_NAME') . ';charset=utf8';
-    // ↑↑$pdo= new PDO("データベースの種類:host=接続先アドレス, 
-    // dbname=データベース名,
-    // charset=文字エンコード" "ユーザー名",
-    //  "パスワード", オプション) と一緒の書き方
-
-    $username = getenv('DB_USER');
-    $password = getenv('DB_PASSWORD');
+    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
