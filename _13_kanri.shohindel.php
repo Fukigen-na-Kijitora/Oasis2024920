@@ -13,13 +13,13 @@ try {
     exit;
 }
 // 検索と並び替え処理
-$order_by = $_GET['order_by'] ?? 'buy_id';
+$order_by = $_GET['order_by'] ?? 'yama_id';
 $order_dir = $_GET['order_dir'] ?? 'asc';
 $search = $_GET['search'] ?? '';
 
 $sql = "SELECT buy_id, yama_name, country_name,price, 
         FROM Oasis_yama
-        WHERE yama_name LIKE :search OR buy_id LIKE :search
+        WHERE yama_name LIKE :search OR yama_id LIKE :search
         ORDER BY $order_by $order_dir";
 
 $stmt = $pdo->prepare($sql);
@@ -142,7 +142,7 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
     </ul>
     </div>
-    <div class="main-content">        
+    <div class="sort">
         <label for="order_by">並び替え</label>
         <select name="order_by" id="order_by" onchange="this.form.submit()">
             <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>標準</option>
