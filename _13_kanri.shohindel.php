@@ -13,31 +13,7 @@ try {
     exit;
 }
 
-   // 検索ワードと並び替え
-   $search = isset($_GET['search']) ? $_GET['search'] : '';
-   $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : 'yama_id';
-   $order_dir = isset($_GET['order_dir']) ? $_GET['order_dir'] : 'asc'; // 昇順/降順
-
-   // 並び替え可能な列を制限
-   $valid_columns = ['yama_id', 'yama_name', 'yama_country', 'price'];
-   if (!in_array($order_by, $valid_columns)) {
-       $order_by = 'yama_id';
-   }
-
-   // SQLクエリ
-   $sql = "
-       SELECT yama_id, yama_name, yama_country, price
-       FROM Oasis_yama
-       WHERE yama_name LIKE :search OR yama_country LIKE :search OR yama_id LIKE :search
-       ORDER BY $order_by $order_dir";
-
-   $stmt = $pdo->prepare($sql);
-   $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
-   $stmt->execute();
-
-   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// 削除処理
+// 検索と並び替え処理// 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     if (!empty($_POST['delete_ids'])) {
         $delete_ids = implode(',', array_map('intval', $_POST['delete_ids']));
