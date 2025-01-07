@@ -7,10 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-//CSRFトークンの検証
-if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    die("不正なリクエストです。");
-}
+
 
 // ユーザーIDを取得
 $user_id = $_SESSION['user_id'];
