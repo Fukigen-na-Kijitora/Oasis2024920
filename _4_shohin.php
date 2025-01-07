@@ -1,12 +1,5 @@
 <?php
-    // セッションの開始
-    session_start();
     
-    // CSRFトークンの生成
-    if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-    $csrf_token = $_SESSION['csrf_token'];
     
     // データベース接続（PDO）
     $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;
@@ -67,7 +60,6 @@
         <div class="btn_container">
          <!-- 購入フォーム -->
             <form action="_5_kounyu.php" method="POST">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
                 <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($result['yama_id'], ENT_QUOTES, 'UTF-8'); ?>">
                 <input type="hidden" name="yama_name" value="<?php echo htmlspecialchars($result['yama_name'], ENT_QUOTES, 'UTF-8'); ?>">
                 <input type="hidden" name="price" value="<?php echo htmlspecialchars($result['price'], ENT_QUOTES, 'UTF-8'); ?>">
@@ -76,7 +68,6 @@
 
          <!-- レンタルフォーム -->
          <form action="_9_rentaru.php" method="POST">
-            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($result['yama_id'], ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="yama_name" value="<?php echo htmlspecialchars($result['yama_name'], ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="price" value="<?php echo htmlspecialchars($result['price'], ENT_QUOTES, 'UTF-8'); ?>">
@@ -85,7 +76,6 @@
 
          <!-- レビュー閲覧フォーム -->
          <form action="_7_review.php" method="POST">
-            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="yama_id" value="<?php echo htmlspecialchars($result['yama_id'], ENT_QUOTES, 'UTF-8'); ?>">
             <input type="submit" id="btn_review" value="レビュー閲覧">
          </form>
