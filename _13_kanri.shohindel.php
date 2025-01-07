@@ -120,7 +120,6 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- サイドバー -->
     <div class="sidebar">
     <ul>
-        <li><a>ダッシュボード</a></li>
         <li><a href="_12_kanri.shohin.php">商品追加</a></li>
         <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
         <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
