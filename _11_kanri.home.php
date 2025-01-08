@@ -61,21 +61,21 @@
 
 <div class="sidebar">
     <h2>ダッシュボード</h2>
-    <div class="_12_kanri.shohin.php"><a href="#">商品追加</a></div>
-    <div class="_13_kanri.shohindel.php"><a href="#">商品削除</a></div>
-    <div class="_14_kanri.user.php"><a href="#">ユーザー管理</a></div>
-    <div class="_15_kanri.add.shohin.php"><a href="#">購入商品管理</a></div>
-    <div class="_16_kanri.rental.shohin.php"><a href="#">レンタル商品管理</a></div>
+    <div class="menu-item"><a href="_12_kanri.shohin.php">商品追加</a></div>
+    <div class="menu-item"><a href="_13_kanri.shohindel.php">商品削除</a></div>
+    <div class="menu-item"><a href="_14_kanri.user.php">ユーザー管理</a></div>
+    <div class="menu-item"><a href="_15_kanri.add.shohin.php">購入商品管理</a></div>
+    <div class="menu-item"><a href="_16_kanri.rental.shohin.php">レンタル商品管理</a></div>
     <div class="menu-item"><a href="#">ログアウト</a></div>
 </div>
 
 <div class="main-content">
     <h1>ダッシュボード</h1>
-    <a href="商品追加.php" class="button">商品追加</a>
-    <a href="商品削除.php" class="button" style="background-color: #2ecc71;">商品削除</a>
-    <a href="ユーザー情報.php" class="button" style="background-color: #e67e22;">ユーザー情報</a>
-    <a href="購入商品管理.php" class="button" style="background-color: #9b59b6;">購入商品管理</a>
-    <a href="レンタル商品管理.php" class="button" style="background-color: #e74c3c;">レンタル商品管理</a>
+    <a href="_12_kanri.shohin.php" class="button">商品追加</a>
+    <a href="_13_kanri.shohindel.php" class="button" style="background-color: #2ecc71;">商品削除</a>
+    <a href="_14_kanri.user.php" class="button" style="background-color: #e67e22;">ユーザー情報</a>
+    <a href="_15_kanri.add.shohin.php" class="button" style="background-color: #9b59b6;">購入商品管理</a>
+    <a href="_16_kanri.rental.shohin.php" class="button" style="background-color: #e74c3c;">レンタル商品管理</a>
 </div>
 
 </body>
