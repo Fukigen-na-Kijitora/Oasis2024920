@@ -60,7 +60,6 @@
 <body>
 
 <div class="sidebar">
-    <h2>ダッシュボード</h2>
     <div class="menu-item"><a href="_12_kanri.shohin.php">商品追加</a></div>
     <div class="menu-item"><a href="_13_kanri.shohindel.php">商品削除</a></div>
     <div class="menu-item"><a href="_14_kanri.user.php">ユーザー管理</a></div>
@@ -70,7 +69,6 @@
 </div>
 
 <div class="main-content">
-    <h1>ダッシュボード</h1>
     <a href="_12_kanri.shohin.php" class="button">商品追加</a>
     <a href="_13_kanri.shohindel.php" class="button" style="background-color: #2ecc71;">商品削除</a>
     <a href="_14_kanri.user.php" class="button" style="background-color: #e67e22;">ユーザー情報</a>
