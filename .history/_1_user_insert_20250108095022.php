@@ -1,14 +1,20 @@
 <?php
 session_start();
+
     // データベース接続
         // Composerのオートローダーを読み込む
-        require 'vendor/autoload.php';
+        require_once __DIR__ . '/vendor/autoload.php';
         // .envファイルのロード
         $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-        $dotenv->load();
+        $dotenv -> load();
 
-        // .envから情報を読み込む
+        // .envから読み込んだ情報を使ってデータベースに接続
         $dsn = 'mysql:host=' .getenv('DB_HOST') . ';dbname=' .getenv('DB_NAME') . ';charset=utf8';
+        // ↑↑$pdo= new PDO("データベースの種類:host=接続先アドレス, 
+        // dbname=データベース名,
+        // charset=文字エンコード" "ユーザー名",
+        //  "パスワード", オプション) と一緒の書き方
+
         $username = getenv('DB_USER');
         $password = getenv('DB_PASSWORD');
 try {

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
     // データベース接続
         // Composerのオートローダーを読み込む
         require 'vendor/autoload.php';
