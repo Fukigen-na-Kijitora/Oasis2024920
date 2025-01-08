@@ -61,11 +61,11 @@
 
 <div class="sidebar">
     <h2>ダッシュボード</h2>
-    <div class="menu-item"><a href="#">商品追加</a></div>
-    <div class="menu-item"><a href="#">商品削除</a></div>
-    <div class="menu-item"><a href="#">ユーザー管理</a></div>
-    <div class="menu-item"><a href="#">購入商品管理</a></div>
-    <div class="menu-item"><a href="#">レンタル商品管理</a></div>
+    <div class="_12_kanri.shohin.php"><a href="#">商品追加</a></div>
+    <div class="_13_kanri.shohindel.php"><a href="#">商品削除</a></div>
+    <div class="_14_kanri.user.php"><a href="#">ユーザー管理</a></div>
+    <div class="_15_kanri.add.shohin.php"><a href="#">購入商品管理</a></div>
+    <div class="_16_kanri.add.rental.php"><a href="#">レンタル商品管理</a></div>
     <div class="menu-item"><a href="#">ログアウト</a></div>
 </div>
 
