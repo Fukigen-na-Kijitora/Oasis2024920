@@ -12,7 +12,21 @@ try {
     echo "データベース接続エラー: " . $e->getMessage();
     exit;
 }
- 
+// 検索と並び替え処理
+$order_by = $_GET['order_by'] ?? 'yama_id';
+$order_dir = $_GET['order_dir'] ?? 'asc';
+$search = $_GET['search'] ?? '';
+
+$sql = "SELECT yama_id, yama_name, country_name, price, 
+        FROM Oasis_yama 
+        WHERE yama_name LIKE :search OR yama_id LIKE :search
+        ORDER BY $order_by $order_dir";
+
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // 削除処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     if (!empty($_POST['delete_ids'])) {
@@ -30,12 +44,12 @@ $stmt = $pdo->query($query);
 $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
  
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品削除</title>
+    <title>購入商品管理</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,60 +77,57 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
             display: block;
             margin-bottom: 15px;
         }
-        .sidebar a:hover {
-            text-decoration: underline;
-        }
         .main-content {
             margin-left: 220px;
             padding: 20px;
-            background-color: #fff;
         }
         h1 {
             margin-bottom: 20px;
         }
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .table th, .table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        .table th {
-            background-color: #2c3e50;
-            color: #fff;
-        }
-        .search-box {
+        form {
             margin-bottom: 20px;
         }
-        .search-box input[type="text"] {
-            padding: 8px;
-            width: 300px;
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
         }
-        .search-box button {
-            padding: 8px 15px;
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
             background-color: #2c3e50;
             color: #fff;
-            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
-        .search-box button:hover {
+        button:hover {
             background-color: #34495e;
         }
-        .delete-button {
-            padding: 8px 15px;
-            background-color: #e74c3c;
-            color: #fff;
-            border: none;
-            cursor: pointer;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .delete-button:hover {
-            background-color: #c0392b;
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        table th {
+            background-color: #2c3e50;
+            color: #fff;
         }
     </style>
 </head>
-<body>
+
     <!-- サイドバー -->
     <div class="sidebar">
     <ul>
