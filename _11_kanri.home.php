@@ -21,18 +21,21 @@
             text-align: center;
         }
         .menu-item {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #34495e;
-            border-radius: 5px;
-            text-align: center;
+        margin: 10px 0;
         }
         .menu-item a {
-            color: #ecf0f1;
-            text-decoration: none;
+        display: block; /* リンクをブロック全体に拡張 */
+        padding: 10px 20px;
+        text-decoration: none; /* 下線を削除 */
+        color: white;
+        background-color: #3498db; /* 背景色 */
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        text-align: center; /* テキストを中央揃え */
         }
+
         .menu-item a:hover {
-            color: #3498db;
+        background-color: #2980b9; /* ホバー時の色変更 */
         }
         .main-content {
             margin-left: 270px;
