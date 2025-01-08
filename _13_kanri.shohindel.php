@@ -17,7 +17,7 @@ $order_by = $_GET['order_by'] ?? 'yama_id';
 $order_dir = $_GET['order_dir'] ?? 'asc';
 $search = $_GET['search'] ?? '';
 
-$sql = "SELECT yama_id, yama_name, country_name, price, 
+$sql = "SELECT yama_id, yama_name, country_name, price
         FROM Oasis_yama 
         WHERE yama_name LIKE :search OR yama_id LIKE :search
         ORDER BY $order_by $order_dir";
