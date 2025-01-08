@@ -144,9 +144,22 @@ $Oasis_yama = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1>商品削除</h1>
         <form method="POST" action="">
             <div class="search-box">
-                <input type="text" placeholder="商品名・国名など">
-                <button type="button">検索</button>
-            </div>
+            <input type="text" name="search" placeholder="山名・idなど" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
+            <button type="submit">検索</button>
+
+            <label for="order_by">並び替え</label>
+        <select name="order_by" id="order_by" onchange="this.form.submit()">
+            <option value="yama_id" <?= $order_by === 'yama_id' ? 'selected' : '' ?>>標準</option>
+            <option value="yama_name" <?= $order_by === 'yama_name' ? 'selected' : '' ?>>山名</option>
+            <option value="country_name" <?= $order_by === 'country_name' ? 'selected' : '' ?>>国名</option>
+            <option value="price" <?= $order_by === 'price' ? 'selected' : '' ?>>価格</option>
+        </select>
+
+        <!-- 昇順・降順切り替えボタン -->
+        <button type="submit" name="order_dir" value="<?= $order_dir === 'asc' ? 'desc' : 'asc' ?>">
+            <?= $order_dir === 'asc' ? '降順' : '昇順' ?>
+        </button>
+
             <table class="table">
                 <thead>
                     <tr>
