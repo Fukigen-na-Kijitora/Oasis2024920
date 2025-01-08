@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  
     // 画像のアップロード処理
     if (isset($_FILES['yama_img']) && $_FILES['yama_img']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = 'images/';
+        $upload_dir = 'uploads/';
         $yama_img = $upload_dir . basename($_FILES['yama_img']['name']);
         if (!move_uploaded_file($_FILES['yama_img']['tmp_name'], $yama_img)) {
             $errors[] = "画像アップロードに失敗しました。";
