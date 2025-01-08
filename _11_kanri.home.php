@@ -8,46 +8,24 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            position: fixed;
-            height: 100%;
-        }
-        .sidebar h2 {
             text-align: center;
+            padding-top: 100px;
         }
-        .menu-item {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #34495e;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .menu-item a {
-            color: #ecf0f1;
-            text-decoration: none;
-        }
-        .menu-item a:hover {
-            color: #3498db;
-        }
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
+        .button-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
         }
         .button {
-            display: inline-block;
-            width: 200px;
+            position: absolute;
+            width: 100px;
             height: 100px;
-            margin: 20px;
             background-color: #1abc9c;
             color: white;
             text-align: center;
             line-height: 100px;
-            font-size: 20px;
+            font-size: 16px;
             border-radius: 10px;
             text-decoration: none;
             transition: background-color 0.3s;
@@ -55,10 +33,34 @@
         .button:hover {
             background-color: #16a085;
         }
+        .button:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        .button:nth-child(2) {
+            top: 35%;
+            left: 0;
+            transform: translate(0, -50%);
+        }
+        .button:nth-child(3) {
+            top: 35%;
+            right: 0;
+            transform: translate(0, -50%);
+        }
+        .button:nth-child(4) {
+            bottom: 0;
+            left: 25%;
+            transform: translate(-50%, 0);
+        }
+        .button:nth-child(5) {
+            bottom: 0;
+            right: 25%;
+            transform: translate(50%, 0);
+        }
     </style>
 </head>
 <body>
-
 <div class="sidebar">
     <h2>ダッシュボード</h2>
     <div class="menu-item"><a href="#">商品追加</a></div>
