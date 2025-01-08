@@ -1,11 +1,13 @@
 <?php
 session_start();
-    
-try {
     // データベース接続
-    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;charset=utf8', 'LAA1602729', 'oasis5');
+    $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;
+    dbname=LAA1602729-oasis;charset=utf8',
+    'LAA1602729',
+    'oasis5');
+
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 入力データ取得
         $name = $_POST['name'] ?? null;
