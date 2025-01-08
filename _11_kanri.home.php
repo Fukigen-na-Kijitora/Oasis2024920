@@ -69,7 +69,7 @@
     <div class="menu-item"><a href="_14_kanri.user.php">ユーザー管理</a></div>
     <div class="menu-item"><a href="_15_kanri.add.shohin.php">購入商品管理</a></div>
     <div class="menu-item"><a href="_16_kanri.rental.shohin.php">レンタル商品管理</a></div>
-    <div class="menu-item"><a href="#">ログアウト</a></div>
+    <div class="menu-item"><a href="_10_kanri.login.php">ログアウト</a></div>
 </div>
 
 <div class="main-content">
