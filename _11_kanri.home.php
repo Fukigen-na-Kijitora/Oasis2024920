@@ -3,82 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ダッシュボード</title>
+    <title>ダッシュボード - 画像アップロード</title>
     <style>
+        /* グローバルスタイル */
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding-top: 100px;
+            display: flex;
         }
-        .button-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto;
-        }
-        .button {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background-color: #1abc9c;
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
             color: white;
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .sidebar .profile {
             text-align: center;
-            line-height: 100px;
-            font-size: 16px;
-            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .profile h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            color: white;
             text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
             transition: background-color 0.3s;
         }
-        .button:hover {
-            background-color: #16a085;
+
+        .sidebar ul li a:hover {
+            background-color: #34495e;
         }
-        .button:nth-child(1) {
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, 0);
+
+        .sidebar .logout {
+            margin-top: auto;
+            margin-bottom: 20px;
         }
-        .button:nth-child(2) {
-            top: 35%;
-            left: 0;
-            transform: translate(0, -50%);
+
+        .sidebar .logout a {
+            color: white;
+            text-decoration: none;
+            background-color: #e74c3c;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
         }
-        .button:nth-child(3) {
-            top: 35%;
-            right: 0;
-            transform: translate(0, -50%);
+
+        .sidebar .logout a:hover {
+            background-color: #c0392b;
         }
-        .button:nth-child(4) {
-            bottom: 0;
-            left: 25%;
-            transform: translate(-50%, 0);
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
         }
-        .button:nth-child(5) {
-            bottom: 0;
-            right: 25%;
-            transform: translate(50%, 0);
+
+        .upload-form {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+
+        .message {
+            color: green;
+        }
+
+        .error {
+            color: red;
         }
     </style>
 </head>
 <body>
-<div class="sidebar">
-    <h2>ダッシュボード</h2>
-    <div class="menu-item"><a href="#">商品追加</a></div>
-    <div class="menu-item"><a href="#">商品削除</a></div>
-    <div class="menu-item"><a href="#">ユーザー管理</a></div>
-    <div class="menu-item"><a href="#">購入商品管理</a></div>
-    <div class="menu-item"><a href="#">レンタル商品管理</a></div>
-    <div class="menu-item"><a href="#">ログアウト</a></div>
+    <!-- サイドバー -->
+    <div class="sidebar">
+    <ul>
+        <li><a href="_11_kanri.home.php">管理ホーム</a></li>
+        <li><a href="_12_kanri.shohin.php">商品追加</a></li>
+        <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
+        <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
+        <li><a href="_15_kanri.add.shohin.php">購入商品管理</a></li>
+        <li><a href="_16_kanri.add.rental.php">レンタル商品管理</a></li>
+    </ul>
 </div>
 
-<div class="main-content">
-    <h1>ダッシュボード</h1>
-    <a href="商品追加.php" class="button">商品追加</a>
-    <a href="商品削除.php" class="button" style="background-color: #2ecc71;">商品削除</a>
-    <a href="ユーザー情報.php" class="button" style="background-color: #e67e22;">ユーザー情報</a>
-    <a href="購入商品管理.php" class="button" style="background-color: #9b59b6;">購入商品管理</a>
-    <a href="レンタル商品管理.php" class="button" style="background-color: #e74c3c;">レンタル商品管理</a>
-</div>
+    
 
+    <!-- ヘッダー部分の読み込み（パスを修正） -->
+    <?php
+    // header.phpが同じディレクトリに存在する場合
+    // もし異なる場所にある場合、適切な相対パスまたは絶対パスを指定してください
+    include './header.php'; // 修正された     
+    ?>
+
+    <!-- コンテンツ部分 -->
+    <div class="content">
+        <h1>ダッシュボード</h1>
+        <div class="dashboard-buttons">
+            <div class="button" style="background-color: #3498db;">
+                <a href="add_product.php">商品追加</a>
+            </div>
+            <div class="button" style="background-color: #2ecc71;">
+                <a href="delete_product.php">商品削除</a>
+            </div>
+            <div class="button" style="background-color: #f39c12;">
+                <a href="user_info.php">ユーザー情報</a>
+            </div>
+            <div class="button" style="background-color: #9b59b6;">
+                <a href="purchase_management.php">購入商品管理</a>
+            </div>
+            <div class="button" style="background-color: #e74c3c;">
+                <a href="rental_management.php">レンタル商品管理</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
