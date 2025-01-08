@@ -1,4 +1,16 @@
 <?php
+$host = 'mysql306.phy.lolipop.lan';
+$dbname = 'LAA1602729-oasis';
+$user = 'LAA1602729';
+$password = 'oasis5';
+ 
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "データベース接続エラー: " . $e->getMessage();
+    exit;
+}
 session_start();
 
 // セッション確認：ログイン状態でなければログイン画面へリダイレクト
@@ -163,6 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     <!-- サイドバー -->
     <div class="sidebar">
     <ul>
+        <li><a href="_11_kanri.home.php">管理ホーム</a></li>
         <li><a href="_12_kanri.shohin.php">商品追加</a></li>
         <li><a href="_13_kanri.shohindel.php">商品削除</a></li>
         <li><a href="_14_kanri.user.php">ユーザー管理</a></li>
