@@ -9,7 +9,7 @@ session_start();
         $dotenv->load();
 
         // .envから読み込んだ情報を使ってデータベースに接続
-        $dsn = 'mysql:host=' .getenv('DB_HOST') . ';dbname=' .getenv('DB_NAME') . ';charset=' .getenv('DB_CHARSET');
+        $dsn = 'mysql:host=' .getenv('DB_HOST') . ';dbname=' .getenv('DB_NAME') . ';charset=' .getenv('DB_CHARSET')
         // ↑↑$pdo= new PDO("データベースの種類:host=接続先アドレス, 
         // dbname=データベース名,
         // charset=文字エンコード" "ユーザー名",
