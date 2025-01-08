@@ -21,18 +21,21 @@
             text-align: center;
         }
         .menu-item {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #34495e;
-            border-radius: 5px;
-            text-align: center;
+        margin: 10px 0;
         }
         .menu-item a {
-            color: #ecf0f1;
-            text-decoration: none;
+        display: block; /* リンクをブロック全体に拡張 */
+        padding: 10px 20px;
+        text-decoration: none; /* 下線を削除 */
+        color: white;
+        background-color: #3498db; /* 背景色 */
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        text-align: center; /* テキストを中央揃え */
         }
+
         .menu-item a:hover {
-            color: #3498db;
+        background-color: #2980b9; /* ホバー時の色変更 */
         }
         .main-content {
             margin-left: 270px;
@@ -64,7 +67,7 @@
     <div class="menu-item"><a href="_13_kanri.shohindel.php">商品削除</a></div>
     <div class="menu-item"><a href="_14_kanri.user.php">ユーザー管理</a></div>
     <div class="menu-item"><a href="_15_kanri.add.shohin.php">購入商品管理</a></div>
-    <div class="menu-item"><a href="_16_kanri.rental.shohin.php">レンタル商品管理</a></div>
+    <div class="menu-item"><a href="_16_kanri.add.rental.php">レンタル商品管理</a></div>
     <div class="menu-item"><a href="_10_kanri.login.php">ログアウト</a></div>
 </div>
 
@@ -73,7 +76,7 @@
     <a href="_13_kanri.shohindel.php" class="button" style="background-color: #2ecc71;">商品削除</a>
     <a href="_14_kanri.user.php" class="button" style="background-color: #e67e22;">ユーザー情報</a>
     <a href="_15_kanri.add.shohin.php" class="button" style="background-color: #9b59b6;">購入商品管理</a>
-    <a href="_16_kanri.rental.shohin.php" class="button" style="background-color: #e74c3c;">レンタル商品管理</a>
+    <a href="_16_kanri.add.rental.php" class="button" style="background-color: #e74c3c;">レンタル商品管理</a>
 </div>
 
 </body>
