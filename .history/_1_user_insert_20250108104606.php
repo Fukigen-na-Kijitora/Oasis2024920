@@ -8,7 +8,7 @@ session_start();
         $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
         $dotenv->load();
 
-        // .envから情報を読み込む
+        // .envから読み込んだ情報を使ってデータベースに接続
         $dsn = 'mysql:host=' .getenv('DB_HOST') . ';dbname=' .getenv('DB_NAME') . ';charset=utf8';
         $username = getenv('DB_USER');
         $password = getenv('DB_PASSWORD');
