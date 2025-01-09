@@ -7,6 +7,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+
+
 // ユーザーIDを取得
 $user_id = $_SESSION['user_id'];
 

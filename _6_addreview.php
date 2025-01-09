@@ -13,6 +13,9 @@ $pdo = new PDO('mysql:host=mysql306.phy.lolipop.lan;dbname=LAA1602729-oasis;char
 // エラーメッセージを保持する変数
 $error_message = "";
 
+// 商品IDを取得
+$yama_id = $_POST['yama_id'] ?? null;
+
 // フォームデータの処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
@@ -59,8 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// 商品IDを取得
-$yama_id = $_POST['yama_id'] ?? null;
+
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +83,8 @@ $yama_id = $_POST['yama_id'] ?? null;
 
     <!-- レビュー投稿フォーム -->
     <form action="" method="POST" enctype="multipart/form-data">
-        <h2>レビューの記入</h2>
+    <input type="hidden" name="yama_id" value="<?php echo $yama_id ?? ''; ?>">
+        <h2>レビューの記入をしよう！</h2>
 
         <!-- 星評価 -->
         <label for="evaluation">総合評価<span style="color: red;">(必須)</span>:</label>
