@@ -15,7 +15,7 @@
                 <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="email">メールアドレスまたはユーザー名</label>
+                <label for="email">メールアドレス</label>
                 <input type="text" id="email" name="email" required>
             </div>
             <div class="form-group">
